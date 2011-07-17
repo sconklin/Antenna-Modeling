@@ -1,0 +1,8 @@
+Some files for experimenting with antenna patterns and placement.
+
+The file force12-c3.nec represents a force 12 C3 antenna, with some simplifications made (constant diameter elements).
+
+The spreadsheet has more information.
+
+Anyone is welcome to use these, but they are unsupported and primarily for my experimentation.
+
