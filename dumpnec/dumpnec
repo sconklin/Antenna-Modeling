@@ -1,0 +1,431 @@
+#!/usr/bin/python
+import sys
+
+#
+# Comments
+#
+
+def inches(meters):
+    return float(meters* 39.3700787)
+
+def CM(line):
+    # Comment
+    sline = line.strip()
+    comm = sline[3:]
+    print 'Comment: %s' % comm
+    return
+
+def CE(line):
+    # End Comment
+    sline = line.strip()
+    comm = sline[3:]
+    print 'Com End: %s' % comm
+    return
+
+#
+# Structure geometry input
+#
+
+def GA(line):
+    # GA Wire arc specification
+    print 'GA Wire arc specification:'
+    #print '    %s' % line,
+    parts = line.split()
+    i1 = int(parts[1])
+    i2 = int(parts[2])
+    f1 = float(parts[3])
+    f2 = float(parts[4])
+    f3 = float(parts[5])
+    f4 = float(parts[6])
+    print '    Tag:          %d' % i1
+    print '    Segments:     %d' % i2
+    print '    Arc Radius:   %f m (%.2f in)' % (f1, inches(f1))
+    print '    Angle start:  %f degrees' % f2
+    print '    Angle end:    %f degrees' % f3
+    print '    Wire Radius:  %f' % f4
+    return
+            
+def GM(line):
+    # GM Coordinate transformation
+    print 'GM Coordinate transformation:'
+    #print '    %s' % line,
+    parts = line.split()
+    ITGI = int(parts[1])
+    NRPT = int(parts[2])
+    ROX = float(parts[3])
+    ROY = float(parts[4])
+    ROZ = float(parts[5])
+    XS = float(parts[6])
+    YS = float(parts[7])
+    ZS = float(parts[8])
+    ITS = float(parts[9])
+    print '    Tag Increment:                %d' % ITGI
+    print '    New Structs                   %d' % NRPT
+    print '    Rotation about x:             %f degrees' % ROX
+    print '    Rotation about y:             %f degrees' % ROY
+    print '    Rotation about z:             %f degrees' % ROZ
+    print '    Translation in x:             %f m (%.2f in)' % (XS, inches(XS))
+    print '    Translation in y:             %f m (%.2f in)' % (YS, inches(YS))
+    print '    Translation in z:             %f m (%.2f in)' % (ZS, inches(ZS))
+    print '    Initial Translation Segment:  %d' % int(round(ITS))
+    return
+            
+def GR(line):
+    # GR Generate cylindrical structure
+    print 'GR Generate cylindrical structure:'
+    #print '    %s' % line,
+    parts = line.split()
+    I1 = int(parts[1])
+    I2 = int(parts[2])
+    print '    Tag Increment:                     %d' % I1
+    print '    Number of times structure occurs:  %d' % I2
+    return
+            
+def GW(line):
+    # GW Wire Specification
+    print 'GW Wire Specification:'
+    #print '    %s' % line,
+    parts = line.split()
+    ITG = int(parts[1])
+    NS  = int(parts[2])
+    XW1 = float(parts[3])
+    YW1 = float(parts[4])
+    ZW1 = float(parts[5])
+    XW2 = float(parts[6])
+    YW2 = float(parts[7])
+    ZW2 = float(parts[8])
+    RAD = float(parts[9])
+    print '    Tag:           %d' % ITG
+    print '    Segments:      %d' % NS
+    print '    Start x:       %f m (%.2f in)' % (XW1, inches(XW1))
+    print '    Start y:       %f m (%.2f in)' % (YW1, inches(YW1))
+    print '    Start z:       %f m (%.2f in)' % (ZW1, inches(ZW1))
+    print '    End   x:       %f m (%.2f in)' % (XW2, inches(XW2))
+    print '    End   y:       %f m (%.2f in)' % (YW2, inches(YW2))
+    print '    End   z:       %f m (%.2f in)' % (ZW2, inches(ZW2))
+    print '    Wire Radius:   %f m (%.2f in)' % (RAD, inches(RAD))
+    return
+
+def GC(line):
+    # GC Wire Taper
+    print "GC Wire Taper"
+    parts = line.split()
+    NOP1 = int(parts[1])
+    NOP2  = int(parts[2])
+    RDEL = float(parts[3])
+    RAD1 = float(parts[4])
+    RAD2 = float(parts[5])
+    print '    Ratio to preior segment:   %f' % RDEL
+    print '    First Segment Radius:      %f m (%.2f in)' % (RAD1, inches(RAD1))
+    print '    Last  Segment Radius:      %f m (%.2f in)' % (RAD2, inches(RAD2))
+    return
+            
+def GE(line):
+    # GE End of geometry Input
+    parts = line.split()
+    print 'GE End of Geometry Input:'
+    #print '    %s' % line,
+    i1 = int(parts[1])
+    print '    Ground Plane Flag:   %d' % i1, 
+    if i1 == 0:
+        print ' (No Ground Plane Present)'
+    elif i1 == 1:
+        print ' (Ground Plane - Current Expansion Modified)'
+    elif i1 == -1:
+        print ' (Ground Plane - Current Expansion Not Modified)'
+    else:
+        print ' (Unknown Value)'
+    return
+
+def GF(line):
+    # GF Read Numerical Green's Function File
+    print "GF Read Numerical Green's Function File (not supported in xnec2c):"
+    #print '    %s' % line,
+    return
+
+def GH(line):
+    # GH Helix/Spiral specification
+    print 'GH Helix/Spiral specification:'
+    #print '    %s' % line,
+    parts = line.split()
+    ITG = int(parts[1])
+    NS = int(parts[2])
+    S = float(parts[3])
+    HL = float(parts[4])
+    A1 = float(parts[5])
+    B1 = float(parts[6])
+    A2 = float(parts[7])
+    B2 = float(parts[8])
+    RAD = float(parts[9])
+    if HL == 0:
+        print '    (Spiral)'
+    elif HL > 0:
+        print '    (Right Handed Helix)'
+    else:
+        print '    (Left Handed Helix)'
+    print '    Segment Tag:         %d' % ITG
+    print '    Segments:            %d' % NS
+    print '    Turn Spacing:        %f m (%.2f in)' % (S, inches(S))
+    print '    Helix Length HL:     %f m (%.2f in)' % (HL, inches(HL))
+    print '    Radius in x @ z=0:   %f m (%.2f in)' % (A1, inches(A1))
+    print '    Radius in y @ z=0:   %f m (%.2f in)' % (A2, inches(A2))
+    print '    Radius in x @ z=HL:  %f m (%.2f in)' % (B1, inches(B1))
+    print '    Radius in y @ z=HL:  %f m (%.2f in)' % (B2, inches(B2))
+    print '    Wire Radius:         %f' % RAD
+    return
+
+def GS(line):
+    # GS Scale structure definitions
+    print 'GS Scale structure definitions:'
+    #print '    %s' % line,
+    parts = line.split()
+    NOP1 = int(parts[1])
+    NOP2 = int(parts[2])
+    F1 = float(parts[3])
+    if NOP1 != 0:
+        print '    First integer value of %d is ignored by xnec2c' % NOP1
+    if NOP2 != 0:
+        print '    Second integer value of %d is ignored by xnec2c' % NOP2
+    print '    Scale by factor:   %f' % F1
+    return
+
+def GX(line):
+    # GX Reflection in coordinate plane
+    print 'GX Reflection in coordinate plane:'
+    #print '    %s' % line,
+    parts = line.split()
+    TNI = int(parts[1])
+    REFL =  int(parts[2])
+    # nec2c just assumes that the space-delimited number is extended
+    # to three digits, and any non-zero digit is set to one
+    dstr = '%03d' % REFL
+    print '    Tag Increment:      %d' % TNI
+    if dstr[0] == '1':
+        print '    Reflected along X axis'
+    if dstr[1] == '1':
+        print '    Reflected along Y axis'
+    if dstr[2] == '1':
+        print '    Reflected along Z axis'
+    return
+
+def SP(line):
+    # Surface Patch
+    print 'SP Surface Patch:'
+    #print '    %s' % line,
+    parts = line.split()
+    NOP1 = int(parts[1])
+    NS = int(parts[2])
+    X1 = float(parts[3])
+    Y1 = float(parts[4])
+    Z1 = float(parts[5])
+    X2 = float(parts[6])
+    Y2 = float(parts[7])
+    Z2 = float(parts[8])
+    if NS == 0:
+        # Arbitrary shape
+        print '    Shape: Arbitrary'
+    elif NS == 1:
+        print '    Shape: Rectangular'
+    elif NS == 2:
+        print '    Shape: Triangular'
+    elif NS == 3:
+        print '    Shape: Quadrilateral'
+    print '    X1     %f m (%.2f in)' % (X1, inches(X1))
+    print '    Y1     %f m (%.2f in)' % (Y1, inches(Y1))
+    print '    Z1     %f m (%.2f in)' % (Z1, inches(Z1))
+    print '    X2     %f m (%.2f in)' % (X2, inches(X2))
+    print '    Y2     %f m (%.2f in)' % (Y2, inches(Y2))
+    print '    Z2     %f m (%.2f in)' % (Z2, inches(Z2))
+    return
+
+def SM(line):
+    # Multiple Patch Surface
+    # Not tested
+    print 'SM Multiple Patch Surface:'
+    #print '    %s' % line,
+    parts = line.split()
+    NX = int(parts[1])
+    NY = int(parts[2])
+    X1 = float(parts[3])
+    Y1 = float(parts[4])
+    Z1 = float(parts[5])
+    X2 = float(parts[6])
+    Y2 = float(parts[7])
+    Z2 = float(parts[8])
+    print '    Patches across X:     %d' % NX
+    print '    Patches across Y:     %d' % NY
+    print '    Corner 1 x:           %f m (%.2f in)' % (X1, inches(X1))
+    print '    Corner 1 y:           %f m (%.2f in)' % (Y1, inches(Y1))
+    print '    Corner 1 z:           %f m (%.2f in)' % (Z1, inches(Z1))
+    print '    Corner 2 x:           %f m (%.2f in)' % (X2, inches(X2))
+    print '    Corner 2 y:           %f m (%.2f in)' % (Y2, inches(Y2))
+    print '    Corner 2 z:           %f m (%.2f in)' % (Z2, inches(Z2))
+    return
+
+def SC(line):
+    # Surface Multiple Patch Continuation
+    # Not tested
+    print 'SC Surface Multiple Patch Continuation:'
+    #print '    %s' % line,
+    parts = line.split()
+    NOP1 = int(parts[1])
+    NS = int(parts[2])
+    X3 = float(parts[3])
+    Y3 = float(parts[4])
+    Z3 = float(parts[5])
+    print '    Corner 3 x:           %f m (%.2f in)' % (X3, inches(X3))
+    print '    Corner 3 y:           %f m (%.2f in)' % (Y3, inches(Y3))
+    print '    Corner 3 z:           %f m (%.2f in)' % (Z3, inches(Z3))
+    return
+            
+#
+# Program Control
+#
+
+def CP(line):
+    # Maximum Coupling Calculation
+    print 'CP Maximum Coupling Calculation:'
+    #print '    %s' % line,
+    print '    Not supported in nec2c'
+    return
+
+def EK(line):
+    # Extended thin-wire kernel
+    print 'EK Extended thin-wire kernel:'
+    #print '    %s' % line,
+    parts = line.split()
+    I1 = int(parts[1])
+    if I1 == 0:
+        print '    Initiate extended thin-wire kernel'
+    elif I1 == -1:
+        print '    Return to standard thin-wire kernel'
+    else:
+        print '    Unexpected value %d' % I1
+    return
+
+def EX(line):
+    # Excitation
+    print 'EX Excitation:'
+    print '    %s' % line,
+    return
+            
+def FR(line):
+    # Frequency
+    print 'FR Frequency:'
+    print '    %s' % line,
+    return
+
+def GN(line):
+    # Ground parameters
+    print 'GN Ground parameters:'
+    print '    %s' % line,
+    return
+
+def KH(line):
+    # Interaction Approximation Range
+    print 'KH Interaction Approximation Range:'
+    print '    %s' % line,
+    return
+
+def LD(line):
+    # Loading
+    print 'LD Loading:'
+    print '    %s' % line,
+    return
+
+def GD(line):
+    # Additional ground parameters
+    print 'GD Additional ground parameters:'
+    print '    %s' % line,
+    return
+      
+def NH(line):
+    # Near Field NH
+    print 'NH Near Field NH:'
+    print '    %s' % line,
+    return
+            
+def NE(line):
+    # Near Field NE
+    print 'NE Near Field NE:'
+    print '    %s' % line,
+    return
+
+def NT(line):
+    # Networks
+    print 'NT Networks:'
+    print '    %s' % line,
+    return
+
+def NX(line):
+    # Next Structure
+    print 'NX Next Structure:'
+    #print '    %s' % line,
+    print '    Not supported in nec2c'
+    return
+
+def RP(line):
+    # Radiation Pattern
+    print 'RP Radiation Pattern:'
+    print '    %s' % line,
+    return
+
+def PQ(line):
+    # Print control for charge on wires
+    print 'PQ Print control for charge on wires:'
+    #print '    %s' % line,
+    print '    Not supported in nec2c'
+    return
+
+def PT(line):
+    # Page Title / Print Control for Current on Wires 
+    print 'PT Page Title / Print Control for Current on Wires :'
+    #print '    %s' % line,
+    print '    Not supported in nec2c'
+    return
+
+def TL(line):
+    # Transmission Line
+    print 'TL Transmission Line:'
+    print '    %s' % line,
+    return
+
+def WG(line):
+    # Write NGF file
+    print 'WG Write NGF file:'
+    #print '    %s' % line,
+    print '    Not supported in nec2c'
+    return
+
+def XQ(line):
+    # Execute
+    print 'XQ Execute:'
+    print '    %s' % line,
+    return
+
+def EN(line):
+    # End of run
+    print 'EN End of run'
+    #print '    %s' % line,
+    #print 'End of Run'
+    return
+
+ops = {'CM':CM, 'CE':CE,
+       'GA':GA, 'GM':GM, 'GR':GR, 'GW':GW, 'GE':GE, 'GF':GF, 'GH':GH, 'GS':GS, 'GX':GX, 'SP':SP, 'SM':SM, 'SC':SC, 'GC':GC,
+       'CP':CP, 'EK':EK, 'EX':EX, 'FR':FR, 'GN':GN, 'KH':KH, 'LD':LD, 'GD':GD, 'NH':NH,
+       'NE':NE, 'NT':NT, 'NX':NX, 'RP':RP, 'PQ':PQ, 'PT':PT, 'TL':TL, 'WG':WG, 'XQ':XQ, 'EN':EN}
+
+def main():
+    inf = open(sys.argv[1])
+    for line in inf.readlines():
+        lparts = line.split()
+        if lparts[0] in ops:
+            ops[lparts[0].upper()](line)
+        else:
+            print 'Unhandled -> ', line,
+    return
+
+main()
+
+
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
