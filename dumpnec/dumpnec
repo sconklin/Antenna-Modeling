@@ -306,55 +306,327 @@ def EK(line):
 def EX(line):
     # Excitation
     print 'EX Excitation:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts = line.split()
+    TYPE = int(parts[1])
+    I2   = int(parts[2])
+    I3   = int(parts[3])
+    I4   = int(parts[4])
+    F1 = float(parts[5])
+    F2 = float(parts[6])
+    F3 = float(parts[7])
+    if TYPE == 0:
+        print '    Voltage Source'
+    elif TYPE == 1:
+        print '    Incident Plane Wave, linear polarization'
+    elif TYPE == 2:
+        print '    Incident Plane Wave, right hand elliptic polarization'
+    elif TYPE == 3:
+        print '    Incident Plane Wave, left hand elliptic polarization'
+    elif TYPE == 4:
+        print '    Elementary current source'
+    elif TYPE == 5:
+        print '    Voltage Source (current-slope-discontinuity)'
+    else:
+        print '    Unknown Excitation type %d' % TYPE
+        return
+
+    if TYPE in [0,5]:
+        # voltage
+        print '    Driven Tag:      %d' % I2
+        print '    Driven Segment:  %d' % I3
+        # expand I4 to two positions
+        tmp = '%02d' % I4
+        if tmp[0] == '0':
+            col19 = False
+        elif tmp[0] == '1':
+            col19 = True
+            print '    maximum relative admittance matrix asymmetry for source segment and network connection will be calculated and printed'
+        else:
+            col19 = False
+            print 'Unexpected digit <%d> in field I4: %s' % (I4, line)
+        if tmp[1] == '0':
+            col20 = False
+        elif tmp[1] == '1':
+            col20 = True
+            print '    the input impedance at voltage sources is always printed directly before the segment currents in the output'
+        else:
+            col20 = False
+            print 'Unexpected digit <%d> in field I4: %s' % (I4, line)
+        print '    Real part:       %f volts' % F1
+        print '    Imaginary part:  %f volts' % F2
+        if (col20):
+            print '    Normalization constant for impedance:  %f' % F3
+        
+    elif TYPE in [1,2,3]:
+        # plane wave
+        print '    Number of Theta angles:      %d' % I2
+        print '    Number of Phi angles:        %d' % I3
+        tmp = '%01d' % I4
+        if tmp[0] == '0':
+            pass
+        elif tmp[0] == '1':
+            print '    maximum relative admittance matrix asymmetry for network connections will be calculated'
+        else:
+            print 'Unexpected digit <%d> in field I4: %s' % (I4, line)
+        print '    Incident Wave vector Theta:     %f degrees' % F1
+        print '    Incident Wave vector Phi:       %f degrees' % F2
+        print '    Polarization angle Eta:         %f degrees' % F3
+        print '    Theta angle stepping increment: %f degrees' % F4
+        print '    Phi angle stepping increment:   %f degrees' % F5
+        print '    Ratio of minor to major Axes:   %f degrees' % F6
+    else:
+        # must be 4 - current source
+        tmp = '%01d' % I4
+        if tmp[0] == '0':
+            pass
+        elif tmp[0] == '1':
+            print '    maximum relative admittance matrix asymmetry for network connections will be calculated'
+        else:
+            print 'Unexpected digit <%d> in field I4: %s' % (I4, line)
+        print '    X position:     %f m (%.2f in)' % (F1, inches(F1))
+        print '    Y position:     %f m (%.2f in)' % (F2, inches(F2))
+        print '    Z position:     %f m (%.2f in)' % (F3, inches(F3))
+        print '    Alpha:          %f degrees'   % F4
+        print '    Beta:           %f degrees'   % F5
+        print '    Current Moment: %f' % F5
     return
             
 def FR(line):
     # Frequency
     print 'FR Frequency:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts = line.split()
+    IFRQ = int(parts[1])
+    NFRQ = int(parts[2])
+    NOP1 = int(parts[3])
+    NOP2 = int(parts[4])
+    FREQ = float(parts[5])
+    DELFRQ = float(parts[6])
+    if IFRQ == 0:
+            print '    Linear Stepping'
+            endfreq = FREQ + (NFRQ * DELFRQ)
+    elif IFRQ == 1:
+            print '    Multiplicative Stepping'
+            endfreq = FREQ
+            for i in range(NFRQ):
+                endfreq = endfreq * DELFRQ
+    else:
+            print '    Unexpected stepping value %d: %s' % (IFRQ, line)
+    print '    Number of Steps:    %d' % NFRQ
+    print '    Frequency:          %f MHz'   % FREQ
+    print '    Increment:          %f' % DELFRQ
+    print '    Ending Frequency:   %f MHz [calculated]' % endfreq
     return
 
 def GN(line):
     # Ground parameters
     print 'GN Ground parameters:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts  = line.split()
+    IPERF  = int(parts[1])
+    if IPERF == -1:
+            print '    Free space (nullifies any previous ground definitions)'
+            return
+    NRADL  = int(parts[2])
+    NOP1   = int(parts[3])
+    NOP2   = int(parts[4])
+    EPSE   = float(parts[5])
+    SIG    = float(parts[6])
+    if IPERF == 0:
+            print '    Finite ground, reflection-coefficient approximation'
+    if IPERF == 1:
+            print '    Perfectly conducting ground'
+    elif IPERF == 2:
+            print '    Finite ground, Sommerfield/Norton method'
+    else:
+            print '    Unexpected ground-type flag %d: %s' % (IPERF, line)
+    print '    Relative Dialectric Constant:  %f' % EPSE
+    print '    Conductivity:                  %f (mhos/meter)' % SIG
+    print '    Number of Radials:             %d' % NRADL
+    if NRADL == 0:
+        # cliff problem
+        EPSR2   = float(parts[7])
+        SIG2    = float(parts[8])
+        CLT     = float(parts[9])
+        CHT     = float(parts[10])
+        print '    Relative Dialectric Constant (second medium):   %f'   % EPSR2
+        print '    Conductivity (second medium):                   %f mhos/meter'   % SIG2
+        print '    Distance from origin to join between mediums:   %f m (%.2f in)' % (CLT, inches(CLT))
+        print '    Distance medium 2 is below medium 1:            %f m (%.2f in)' % (CHT, inches(CHT))
+    else:
+        # we have radials
+        SRAD   = float(parts[7])
+        WRAD    = float(parts[8])
+        print '    Radius of radial screen:       %f m (%.2f in)' % (SRAD, inches(SRAD))
+        print '    Radius of radial wires:        %f m (%.2f in)' % (WRAD, inches(WRAD))
     return
 
 def KH(line):
     # Interaction Approximation Range
     print 'KH Interaction Approximation Range:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts  = line.split()
+    RKH  = int(parts[1])
+    print '    Approximation used for interactions over %d wavelengths' % RKH
     return
 
 def LD(line):
     # Loading
     print 'LD Loading:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts = line.split()
+    LDTYP = int(parts[1])
+    if LDTYP == -1:
+            print '    Short all loads (nullifies any previous loads)'
+            return
+    if LDTYP == 0:
+            print '    Series RLC, input Ohms, Henries, Farads'
+    elif LDTYP == 1:
+            print '    Parallel RLC, input Ohms, Henries, Farads'
+    elif LDTYP == 2:
+            print '    Series RLC, input Ohms/meter, Henries/meter, Farads/meter'
+    elif LDTYP == 3:
+            print '    Parallel RLC, input Ohms/meter, Henries/meter, Farads/meter'
+    elif LDTYP == 4:
+            print '    Impedance, input resistance and reactance in Ohms'
+    elif LDTYP == 5:
+            print '    Wire conductivity, mhos/meter'
+    else:
+            print '    Unexpected value of %d for Load Type: %s' % (LDTYP, line)
+
+    LDTAG = int(parts[2])
+    LDTAGF = int(parts[3])
+    LDTAGT = int(parts[4])
+    print '    Tag:             %d' % LDTAG
+    print '    Start segment:   %d' % LDTAGF
+    print '    End segment:     %d' % LDTAGT
+
+    ZLR = float(parts[5])
+    ZLI = float(parts[6])
+    ZLC = float(parts[7])
+    if LDTYP in [0,1]:
+        units1 = 'Ohms'
+        units2 = 'Henries'
+        units3 = 'Farads'
+        print '    Resistance:  %f %s' % (ZLR, unit1)
+        print '    Inductance:  %f %s' % (ZLI, unit2)
+        print '    Capacitance: %f %s' % (ZLC, unit3)
+    elif LDTYP in [2,3]:
+        units1 = 'Ohms/meter'
+        units2 = 'Henries/meter'
+        units3 = 'Farads/meter'
+        print '    Resistance:  %f %s' % (ZLR, unit1)
+        print '    Inductance:  %f %s' % (ZLI, unit2)
+        print '    Capacitance: %f %s' % (ZLC, unit3)
+    elif LDTYP == 4:
+        ohms = 'Ohms'
+        print '    Resistance:  %f %s' % (ZLR, ohms)
+        print '    Reactance:   %f %s' % (ZLI, ohms)
+    else:
+        # LDTYP=5
+        mhosmeter = 'mhos/meter'
+        print '    Conductivity:  %f %s' % (ZLR, mhosmeter)
     return
 
 def GD(line):
     # Additional ground parameters
     print 'GD Additional ground parameters:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts  = line.split()
+    NOP1   = int(parts[1])
+    NOP2   = int(parts[2])
+    NOP3   = int(parts[3])
+    NOP4   = int(parts[4])
+    EPSR2  = float(parts[5])
+    SIG2   = float(parts[6])
+    CLT    = float(parts[7])
+    CHT    = float(parts[8])
+    print '    Relative Dialectric Constant (second medium):   %f'   % EPSR2
+    print '    Conductivity (second medium):                   %f mhos/meter'   % SIG2
+    print '    Distance from origin to join between mediums:   %f m (%.2f in)' % (CLT, inches(CLT))
+    print '    Distance medium 2 is below medium 1:            %f m (%.2f in)' % (CHT, inches(CHT))
     return
       
+def nhne(line):
+    #print '    %s' % line,
+    parts  = line.split()
+    NEAR   = int(parts[1])
+    NRX    = int(parts[2])
+    NRY    = int(parts[3])
+    NRZ    = int(parts[4])
+    XNR    = float(parts[5])
+    YNR    = float(parts[6])
+    ZNR    = float(parts[7])
+    DXNR   = float(parts[8])
+    DYNR   = float(parts[9])
+    DZNR   = float(parts[10])
+
+    if NEAR == 0:
+        print '    Using Rectangular Coordinates'
+        print '    Points desired in X:     %d'   % NRX
+        print '    Points desired in Y:     %d'   % NRY
+        print '    Points desired in Z:     %d'   % NRZ
+        print '    First field point X:     %f m (%.2f in)' % (XNR, inches(XNR))
+        print '    First field point Y:     %f m (%.2f in)' % (YNR, inches(YNR))
+        print '    First field point Z:     %f m (%.2f in)' % (ZNR, inches(ZNR))
+        print '    Stepping increment in X  %f m (%.2f in)' % (DXNR, inches(DXNR))
+        print '    Stepping increment in Y  %f m (%.2f in)' % (DYNR, inches(DYNR))
+        print '    Stepping increment in Z  %f m (%.2f in)' % (DZNR, inches(DZNR))
+
+    elif NEAR == 1:
+        print '    Using Spherical Coordinates'
+        print '    Points desired in r:         %d'   % NRX
+        print '    Points desired in phi:       %d'   % NRY
+        print '    Points desired in theta:     %d'   % NRZ
+        print '    First field point r:         %f m (%.2f in)' % (XNR, inches(XNR))
+        print '    First field point phi:       %f degrees' % YNR
+        print '    First field point theta:     %f degrees' % ZNR
+        print '    Stepping increment in r:     %f m (%.2f in)' % (DXNR, inches(DXNR))
+        print '    Stepping increment in phi:   %f degrees' % DYNR
+        print '    Stepping increment in theta: %f degrees' % DZNR
+    else:
+        print '    Unexpected coordinate type argument %d: %s' % (NEAR, line)
+    return
+
 def NH(line):
     # Near Field NH
-    print 'NH Near Field NH:'
-    print '    %s' % line,
+    print 'NH Near Magneticic Field:'
+    nhne(line)
     return
             
 def NE(line):
     # Near Field NE
-    print 'NE Near Field NE:'
-    print '    %s' % line,
+    print 'NE Near Electric Field:'
+    nhne(line)
     return
 
 def NT(line):
     # Networks
+    # Untested
     print 'NT Networks:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts  = line.split()
+    TAG1   = int(parts[1])
+    SEG1   = int(parts[2])
+    TAG2   = int(parts[3])
+    SEG2   = int(parts[4])
+    Y11R   = float(parts[5])
+    Y11I   = float(parts[6])
+    Y12R   = float(parts[7])
+    Y12I   = float(parts[8])
+    Y22R   = float(parts[9])
+    Y22I   = float(parts[10])
+    print '    Port 1 tag:       %d' % TAG1
+    print '    Port 1 segment:   %d' % SEG1
+    print '    Port 2 tag:       %d' % TAG2
+    print '    Port 2 segment:   %d' % SEG2
+    print '    Real part of element (1, 1):        %f mhos' % Y11R
+    print '    Imaginary part of element (1, 1):   %f mhos' % Y11I
+    print '    Real part of element (1, 2):        %f mhos' % Y12R
+    print '    Imaginary part of element (1, 2):   %f mhos' % Y12I
+    print '    Real part of element (2, 2):        %f mhos' % Y22R
+    print '    Imaginary part of element (2, 2):   %f mhos' % Y22I
     return
 
 def NX(line):
@@ -367,7 +639,93 @@ def NX(line):
 def RP(line):
     # Radiation Pattern
     print 'RP Radiation Pattern:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts  = line.split()
+    MODE   = int(parts[1])
+    if MODE == 0:
+        print '    Mode: Normal (space-wave fields)'
+    elif MODE == 1:
+        print '    Mode: Surface wave propagating along ground'
+    elif MODE == 2:
+        print '    Mode: Linear cliff with antenna above upper level'
+    elif MODE == 3:
+        print '    Mode: Circular cliff centered at origin, antenna above upper level'
+    elif MODE == 4:
+        print '    Mode: Radial wire ground screen centered at origin'
+    elif MODE == 5:
+        print '    Mode: Radial wire ground screen and linear cliff'
+    elif MODE == 6:
+        print '    Mode: Radial wire ground screen and circular cliff'
+    NTH    = int(parts[2])
+    NPH    = int(parts[3])
+    XNDA   = int(parts[4])
+    THETS   = float(parts[5])
+    PHIS   = float(parts[6])
+    DTH   = float(parts[7])
+    DPH   = float(parts[8])
+    RFLD   = float(parts[9])
+    GNOR   = float(parts[10])
+    if MODE == 1:
+        print '    Points in z:           %d'   % NTH
+    else:
+        print '    Points in theta:       %d'   % NTH
+    print '    Points in phi:         %d'   % NPH
+    xnda = '%04d' % XNDA
+    if xnda[0] == '0':
+        print '    major-axis, minor-axis, and total gain printed'
+    elif xnda[0] == '1':
+        print '    vertical, horizontal, and total gain printed'
+    else:
+        print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
+
+    if xnda[1] == '0':
+        print '    No normalized gain'
+    elif xnda[1] == '1':
+        print '    Major axis gain normalized'
+    elif xnda[1] == '2':
+        print '    Minor axis gain normalized'
+    elif xnda[1] == '3':
+        print '    Vertical axis gain normalized'
+    elif xnda[1] == '4':
+        print '    Horizontal axis gain normalized'
+    elif xnda[1] == '5':
+        print '    Total gain normalized'
+    else:
+        print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
+
+    if xnda[2] == '0':
+        print '    Use power Gain'
+    elif xnda[2] == '1':
+        print '    Use directive gain'
+    else:
+        print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
+        
+    if xnda[3] == '0':
+        print '    No averaging'
+    elif xnda[3] == '1':
+        print '    Average gain computed'
+    elif xnda[3] == '2':
+        print '    Average gain computed, supress printing'
+    else:
+        print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
+
+    if MODE == 1:
+        print '    Initial Z coordinate:      %f m (%.2f in)' % (THETS, inches(THETS))
+        print '    Initial phi angle:         %f degrees' % PHIS
+        print '    Increment for z:           %f m (%.2f in)' % (DTH, inches(DTH))
+        print '    Increment for phi:         %f degrees' % DPH
+        print '    Cylindrical coord phi:     %f m (%.2f in)' % (RFLD, inches(RFLD))
+        print '    Range of z:                %f - %f m, %.2f - %.2f (in) [calculated]' % (THETS, THETS + (NTH * DTH), inches(THETS), inches(THETS + (NTH * DTH)))
+        print '    Range of phi:              %f - %f degrees [calculated]' % (PHIS, PHIS + (NPH * DPH))
+    else:
+        print '    Initial theta angle:       %f degrees' % THETS
+        print '    Initial phi angle:         %f degrees' % PHIS
+        print '    Increment for theta:       %f degrees' % DTH
+        print '    Increment for phi:         %f degrees' % DPH
+        print '    Radial distance:           %f m (%.2f in)' % (RFLD, inches(RFLD))
+        print '    Range of theta:            %f - %f degrees [calculated]' % (THETS, THETS + (NTH * DTH))
+        print '    Range of phi:              %f - %f degrees [calculated]' % (PHIS, PHIS + (NPH * DPH))
+    print '    Gain normalization factor: %f' % GNOR
     return
 
 def PQ(line):
@@ -387,7 +745,30 @@ def PT(line):
 def TL(line):
     # Transmission Line
     print 'TL Transmission Line:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    parts  = line.split()
+    TAG1   = int(parts[1])
+    SEG1   = int(parts[2])
+    TAG2   = int(parts[3])
+    SEG2   = int(parts[4])
+
+    IMP    = float(parts[5])
+    LEN    = float(parts[6])
+    R1     = float(parts[7])
+    I1     = float(parts[8])
+    R2     = float(parts[9])
+    I2     = float(parts[10])
+    print '    Port 1 tag:       %d' % TAG1
+    print '    Port 1 segment:   %d' % SEG1
+    print '    Port 2 tag:       %d' % TAG2
+    print '    Port 2 segment:   %d' % SEG2
+
+    print '    Characteristic impedance:                   %f ohms' % IMP
+    print '    Length:                                     %f m (%.2f in)' % (LEN, inches(LEN))
+    print '    Real part of shunt admittance, end 1        %f mhos' % R1
+    print '    Imaginary part of shunt admittance, end 1   %f mhos' % I1
+    print '    Real part of shunt admittance, end 2        %f mhos' % R2
+    print '    Imaginary part of shunt admittance, end 2   %f mhos' % I2
     return
 
 def WG(line):
@@ -400,7 +781,8 @@ def WG(line):
 def XQ(line):
     # Execute
     print 'XQ Execute:'
-    print '    %s' % line,
+    #print '    %s' % line,
+    print '    Ignored in nec2c'
     return
 
 def EN(line):
@@ -416,13 +798,25 @@ ops = {'CM':CM, 'CE':CE,
        'NE':NE, 'NT':NT, 'NX':NX, 'RP':RP, 'PQ':PQ, 'PT':PT, 'TL':TL, 'WG':WG, 'XQ':XQ, 'EN':EN}
 
 def main():
+    printops = []
+    if len(sys.argv) == 1:
+        print 'Usage: %s filename [taglist]' % sys.argv[0]
+        print '   where filename is mandatory and [taglist] is an optional comma-delimited list of tags to print (no spaces in taglist)'
+        return
+
+    if len(sys.argv) > 2:
+        opslist = sys.argv[2]
+        for op in opslist.split(','):
+            printops.append(op.upper())
     inf = open(sys.argv[1])
     for line in inf.readlines():
         lparts = line.split()
-        if lparts[0] in ops:
-            ops[lparts[0].upper()](line)
-        else:
-            print 'Unhandled -> ', line,
+        op = lparts[0]
+        if (len(printops) == 0) or (len(printops) and op in printops):
+            if op  in ops:
+                ops[lparts[0].upper()](line)
+            else:
+                print 'Unhandled -> ', line,
     return
 
 main()
