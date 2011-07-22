@@ -435,7 +435,7 @@ def GN(line):
     SIG    = float(parts[6])
     if IPERF == 0:
             print '    Finite ground, reflection-coefficient approximation'
-    if IPERF == 1:
+    elif IPERF == 1:
             print '    Perfectly conducting ground'
     elif IPERF == 2:
             print '    Finite ground, Sommerfield/Norton method'
@@ -509,16 +509,16 @@ def LD(line):
         units1 = 'Ohms'
         units2 = 'Henries'
         units3 = 'Farads'
-        print '    Resistance:  %f %s' % (ZLR, unit1)
-        print '    Inductance:  %f %s' % (ZLI, unit2)
-        print '    Capacitance: %f %s' % (ZLC, unit3)
+        print '    Resistance:  %f %s' % (ZLR, units1)
+        print '    Inductance:  %f %s' % (ZLI, units2)
+        print '    Capacitance: %f %s' % (ZLC, units3)
     elif LDTYP in [2,3]:
         units1 = 'Ohms/meter'
         units2 = 'Henries/meter'
         units3 = 'Farads/meter'
-        print '    Resistance:  %f %s' % (ZLR, unit1)
-        print '    Inductance:  %f %s' % (ZLI, unit2)
-        print '    Capacitance: %f %s' % (ZLC, unit3)
+        print '    Resistance:  %f %s' % (ZLR, units1)
+        print '    Inductance:  %f %s' % (ZLI, units2)
+        print '    Capacitance: %f %s' % (ZLC, units3)
     elif LDTYP == 4:
         ohms = 'Ohms'
         print '    Resistance:  %f %s' % (ZLR, ohms)
