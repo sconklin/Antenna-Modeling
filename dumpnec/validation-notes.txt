@@ -1,0 +1,85 @@
+Segment lengths relative to wavelength
+    .001 L < Segment Length < 0.1 L
+
+Wire radius relative to wavelength
+    Extended thin-wire model needed in some cases
+    page 7 
+
+Delta/a wire diameter
+
+Test for wires which intersect but not at endpoints
+
+Test for endpoints which are close but not connected
+(They are considered connected if within about .001 shortest segment length)
+
+Test for wires which meet at an acute angle (page 8)
+
+Patch equation is not valid for thin plates, etc (page 8)
+
+(p9)
+
+Segments or patches must not overlap
+
+warn on large radius change between connected segments
+
+The two segments on each side of a charge density discontinuity voltage
+source should be parallel and have the same length and radius. When
+this source is at the base of a segment connected to a ground plane.
+the segment should be vertical.
+
+The number of wires joined at a single junction cannot exceed 30
+because of a dimension limitation in the code.
+
+When wires are parallel and very close together, the segments should be
+aligned to avoid incorrect current perturbation from offset match point
+and segment junctions.
+
+(p10)
+
+there is no integration over the patch unless a wire is connected to the patch center
+
+(p11)
+
+The user should try to choose patches so that those with wires
+connected are approximately square with sides parallel to ^t 1 and ^t2. The
+connected wire is not required to be normal to the patch but cannot lie in
+the plane of the patch. Only a single wire may connect to a given patch and
+a segment may have a patch connection on only one of its ends. Also, a wire
+may never connect to a patch formed by subdividing another patch for a
+previous connection.
+
+A minimum of about 25 patches should be used
+per square wavelength of surface area, with the maximum size for an
+individual patch about 0.04 square wavelengths. Large patches may be used on
+large smooth surfaces while smaller patches are needed in areas of small
+radius of curvature, both for geometrical modeling accuracy and for accuracy
+of the integral equation solution. In the case of an edge, a precise local
+representation cannot be included; however, smaller patches in the vicinity
+of the edge can lead to more accurate results since the current magnitude
+may vary rapidly in this region. Since connection of a wire to a patch
+causes the patch to be divided into four smaller patches, a larger patch may
+be input in anticipation of the subdivision.
+
+(p12)
+
+very long narrow patches should be avoided when subdividing the surface
+
+(p13)
+
+However, for a horizontal wire with radius a,
+and height h to the wire axis, [h 2 + a2]1/2 should be greater than about
+10-6 wavelengths. Furthermore, the height should be at least several times
+the radius for the thin-wire approximation to be valid.
+
+(And more on p13-14)
+
+(p15)
+
+A CE card must always appear in the deck, and may be preceded by one or more
+CM cards. The next card after the CE card must be a geometry card.
+
+P19
+
+If there is a GF card, it must follow the CE
+
+stopped 38
