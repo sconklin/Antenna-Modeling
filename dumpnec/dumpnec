@@ -44,7 +44,7 @@ def GA(line):
     print '    Angle end:    %f degrees' % f3
     print '    Wire Radius:  %f' % f4
     return
-            
+
 def GM(line):
     # GM Coordinate transformation
     print 'GM Coordinate transformation:'
@@ -69,7 +69,7 @@ def GM(line):
     print '    Translation in z:             %f m (%.2f in)' % (ZS, inches(ZS))
     print '    Initial Translation Segment:  %d' % int(round(ITS))
     return
-            
+
 def GR(line):
     # GR Generate cylindrical structure
     print 'GR Generate cylindrical structure:'
@@ -80,7 +80,7 @@ def GR(line):
     print '    Tag Increment:                     %d' % I1
     print '    Number of times structure occurs:  %d' % I2
     return
-            
+
 def GW(line):
     # GW Wire Specification
     print 'GW Wire Specification:'
@@ -119,14 +119,14 @@ def GC(line):
     print '    First Segment Radius:      %f m (%.2f in)' % (RAD1, inches(RAD1))
     print '    Last  Segment Radius:      %f m (%.2f in)' % (RAD2, inches(RAD2))
     return
-            
+
 def GE(line):
     # GE End of geometry Input
     parts = line.split()
     print 'GE End of Geometry Input:'
     #print '    %s' % line,
     i1 = int(parts[1])
-    print '    Ground Plane Flag:   %d' % i1, 
+    print '    Ground Plane Flag:   %d' % i1,
     if i1 == 0:
         print ' (No Ground Plane Present)'
     elif i1 == 1:
@@ -277,7 +277,7 @@ def SC(line):
     print '    Corner 3 y:           %f m (%.2f in)' % (Y3, inches(Y3))
     print '    Corner 3 z:           %f m (%.2f in)' % (Z3, inches(Z3))
     return
-            
+
 #
 # Program Control
 #
@@ -357,7 +357,7 @@ def EX(line):
         print '    Imaginary part:  %f volts' % F2
         if (col20):
             print '    Normalization constant for impedance:  %f' % F3
-        
+
     elif TYPE in [1,2,3]:
         # plane wave
         print '    Number of Theta angles:      %d' % I2
@@ -391,7 +391,7 @@ def EX(line):
         print '    Beta:           %f degrees'   % F5
         print '    Current Moment: %f' % F5
     return
-            
+
 def FR(line):
     # Frequency
     print 'FR Frequency:'
@@ -516,9 +516,9 @@ def LD(line):
         units1 = 'Ohms/meter'
         units2 = 'Henries/meter'
         units3 = 'Farads/meter'
-        print '    Resistance:  %f %s' % (ZLR, units1)
-        print '    Inductance:  %f %s' % (ZLI, units2)
-        print '    Capacitance: %f %s' % (ZLC, units3)
+        print '    Resistance:  %e %s' % (ZLR, units1)
+        print '    Inductance:  %e %s' % (ZLI, units2)
+        print '    Capacitance: %e %s' % (ZLC, units3)
     elif LDTYP == 4:
         ohms = 'Ohms'
         print '    Resistance:  %f %s' % (ZLR, ohms)
@@ -547,7 +547,7 @@ def GD(line):
     print '    Distance from origin to join between mediums:   %f m (%.2f in)' % (CLT, inches(CLT))
     print '    Distance medium 2 is below medium 1:            %f m (%.2f in)' % (CHT, inches(CHT))
     return
-      
+
 def nhne(line):
     #print '    %s' % line,
     parts  = line.split()
@@ -594,7 +594,7 @@ def NH(line):
     print 'NH Near Magneticic Field:'
     nhne(line)
     return
-            
+
 def NE(line):
     # Near Field NE
     print 'NE Near Electric Field:'
@@ -699,7 +699,7 @@ def RP(line):
         print '    Use directive gain'
     else:
         print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
-        
+
     if xnda[3] == '0':
         print '    No averaging'
     elif xnda[3] == '1':
@@ -736,7 +736,7 @@ def PQ(line):
     return
 
 def PT(line):
-    # Page Title / Print Control for Current on Wires 
+    # Page Title / Print Control for Current on Wires
     print 'PT Page Title / Print Control for Current on Wires :'
     #print '    %s' % line,
     print '    Not supported in nec2c'
