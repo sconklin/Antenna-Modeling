@@ -13,19 +13,20 @@ def meters(inches):
 
 def main():
 
-    topdia = 0.625 # Top element diameter in inches
-    botdia = 0.625 # Bottom element diameter in inches
-    enddia = 0.625 # End shorting bar diameter inches
-    off = 1.0 # offset of top element in inches - .7625 clears boom with 1/4" dia elements, .950 clears with 5/8
-    botoff = -1.0 #inches
+    topdia = 0.25 # Top element diameter in inches
+    botdia = 0.25 # Bottom element diameter in inches
+    enddia = 0.5 # End shorting bar diameter inches
+    off = 0.875 # offset of top element in inches - .7625 clears boom with 1/4" dia elements, .950 clears with 5/8
+    botoff = -0.875 #inches
     drivenlength = 0.95 # meters
-    freq_low = 136
-    freq_high = 152
+    freq_low = 144
+    freq_high = 148
     scale = 1.0
+    driven_scale = 1.0
 
     # #nd of configurables
 
-    end_L = "%1.5f" % (drivenlength/2)
+    end_L = "%1.5f" % ((drivenlength* driven_scale)/2)
     offset = "%1.5f" %  meters(off)
     top_DIA =  "%1.5f" %  meters(topdia / 2)
     bot_DIA =  "%1.5f" %  meters(botdia / 2)

@@ -1,0 +1,43 @@
+{
+    "Elements": [
+        {
+            "diameter": 6.35, 
+            "distance": 0, 
+            "length": 1021.11, 
+            "segments": 25
+        }, 
+        {
+            "diameter": 6.35, 
+            "distance": 413.51, 
+            "excited": true, 
+            "length": 998.68, 
+            "segments": 25
+        }, 
+        {
+            "diameter": 6.35, 
+            "distance": 568.57, 
+            "length": 934.17, 
+            "segments": 25
+        }, 
+        {
+            "diameter": 6.35, 
+            "distance": 940.73, 
+            "length": 925.86, 
+            "segments": 25
+        }, 
+        {
+            "diameter": 6.35, 
+            "distance": 1385.25, 
+            "length": 916.7, 
+            "segments": 25
+        }
+    ], 
+    "Excited": 0, 
+    "Frequency": {
+        "end": 146, 
+        "start": 144, 
+        "step": 0.1
+    }, 
+    "LengthFudge": 1.0, 
+    "Name": "2m-sat-yagi"
+}

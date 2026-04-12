@@ -1,0 +1,65 @@
+class AntennaTools
+
+  L_SPEED = 299792485
+
+  def self.wavelength(frequency)
+    L_SPEED/frequency
+
+  def self.physical_length(frequency, degrees, velocity_factor)
+    self.wavelength(frequency) * ((degrees % 360) / 360) * velocity_factor
+
+  def self.swr(z1, z2)
+    (z1/z2).abs
+
+  def seriesmatch(loadZ, sourceZ, matchZ)
+    # All inputs are Complex
+    # returns lengths of sections in degrees
+    swr = self.swr(sourceZ, 
+
+# Input parameters:
+#
+# RL = resistive component of load impedance
+# XL = reactive component of load impedance (- for capacitive, + for inductive)
+# Z0 = source impedance
+# Z1 = matching section impedance
+# F  = frequency (optional)
+# V  = Velocity Factor for transmission line (required if F specified)
+# VM = Velocity factor for matching section (required if F specified)
+#
+
+# if RL/Z0 > 1 then SWR = RL/Z0
+# else SWR=Z0/RL
+
+# if Z1 >= (Z0 * SQR(SWR)) 
+#    "select another impedance for the matching section"
+# else
+#    N = Z1/Z0
+#    R = RL/Z0
+#    X = XL/Z0
+#    M = (R-1)**2
+#    J = (N - (1/N))**2
+#    K = M + (X**2)
+#    Y = (R*J) - M - (X**2)
+#    Z = K/Y
+#    B = SQR(Z)
+#    D = (N-(R/N))
+#    E = X*N*B
+#    H = (B*D) + X
+#    C = R + E -1
+#    A = H/C
+#   Get L1, L2 in degrees
+#    L2 = ARCTAN(B)
+#    L1 = ARCTAN(A)
+#    L2 = L2 * (180/pi)
+#    if L1 < 0
+#        L1 = L1 + 180
+
+# print "distance from load (L1) = ", L1, "degrees"
+# print "length of matching section (L2) = ", L2, "degrees"
+# if we have a freqency
+#    WL = (984*V)/F
+#    LIP = (L1*WL)/360
+#    LIR = (L2*WL)/360
+#    print "Frequency = ", F
+#    print "Length of L1 in feet = ", LIP
+#    print "Length of L2 in feet = ", LIR

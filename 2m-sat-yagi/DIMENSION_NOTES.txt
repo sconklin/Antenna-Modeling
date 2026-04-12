@@ -1,0 +1,5 @@
+Element diameters:
+
+1/4" rod: 6.35 mm dia, 3.175 mm rad
+5/8" rod: 15.88 mm dia, 7.94 mm rad
+

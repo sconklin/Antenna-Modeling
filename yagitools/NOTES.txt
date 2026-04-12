@@ -1,0 +1,13 @@
+json data file containing a yagi definition:
+
+List of elements, for each element:
+  Element Length
+  Element distance from reflector
+  Element Diameter
+
+Frequency start
+Frequency end
+Frequency step
+
+
+  

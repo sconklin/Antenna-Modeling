@@ -1,0 +1,11 @@
+GSMC Data File /src/antenna-models/yagitools/match.gdt on Mon Nov  3 19:06:34 2014
+
+z0: 100
+f0: 1.45e+08
+StartPoint: 1 36.5 5 0 0 0 0 -0.463238 0.0535985
+Elements: 3 2
+74 90 50 0 74
+0 0 0 0 0
+74 40.9091 75 0 74
+74 30.7356 75 0 6f
+GSMC Data File - end
