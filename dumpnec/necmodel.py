@@ -1,5 +1,8 @@
-#!/usr/bin/python
+# Comment #!/usr/bin/python3
 import sys
+
+def inches(meters):
+    return float(meters * 39.3700787)
 
 # Classes for each card type
 class Taper(object):
@@ -14,11 +17,11 @@ class Taper(object):
         self.radiusLast = float(parts[5])
         return
 
-    def dump():
-        print "GC Wire Taper"
-        print '    Ratio to prior segment:   %f' % self.ratio
-        print '    First Segment Radius:      %f m (%.2f in)' % (self.radiusFirst, inches(self.radiusFirst))
-        print '    Last  Segment Radius:      %f m (%.2f in)' % (self.radiusLast, inches(self.radiusLast))
+    def dump(self):
+        print("GC Wire Taper")
+        print('    Ratio to prior segment:   %f' % self.ratio)
+        print('    First Segment Radius:      %f m (%.2f in)' % (self.radiusFirst, inches(self.radiusFirst)))
+        print('    Last  Segment Radius:      %f m (%.2f in)' % (self.radiusLast, inches(self.radiusLast)))
 
 class Wire(object):
     """
@@ -41,16 +44,16 @@ class Wire(object):
         return
 
     def dump(self):
-        print 'GW Wire Specification:'
-        print '    Tag:           %d' % self.tag
-        print '    Segments:      %d' % self.segments
-        print '    Start x:       %f m (%.2f in)' % (self.startX, inches(self.startX))
-        print '    Start y:       %f m (%.2f in)' % (self.startY, inches(self.startY))
-        print '    Start z:       %f m (%.2f in)' % (self.startZ, inches(self.startZ))
-        print '    End   x:       %f m (%.2f in)' % (self.endX, inches(self.endX))
-        print '    End   y:       %f m (%.2f in)' % (self.endY, inches(self.endY))
-        print '    End   z:       %f m (%.2f in)' % (self.endZ, inches(self.endZ))
-        print '    Wire Radius:   %f m (%.2f in)' % (self.wireRadius, inches(wireRadius))
+        print('GW Wire Specification:')
+        print('    Tag:           %d' % self.tag)
+        print('    Segments:      %d' % self.segments)
+        print('    Start x:       %f m (%.2f in)' % (self.startX, inches(self.startX)))
+        print('    Start y:       %f m (%.2f in)' % (self.startY, inches(self.startY)))
+        print('    Start z:       %f m (%.2f in)' % (self.startZ, inches(self.startZ)))
+        print('    End   x:       %f m (%.2f in)' % (self.endX, inches(self.endX)))
+        print('    End   y:       %f m (%.2f in)' % (self.endY, inches(self.endY)))
+        print('    End   z:       %f m (%.2f in)' % (self.endZ, inches(self.endZ)))
+        print('    Wire Radius:   %f m (%.2f in)' % (self.wireRadius, inches(self.wireRadius)))
         return
 
     def addTaper(self, tobj):
@@ -79,13 +82,13 @@ class Arc(object):
         return
 
     def dump(self):
-        print 'GA Wire arc specification:'
-        print '    Tag:          %d' % self.tag
-        print '    Segments:     %d' % self.segments
-        print '    Arc Radius:   %f m (%.2f in)' % (self.radius, inches(self.radius))
-        print '    Angle start:  %f degrees' % self.angleStart
-        print '    Angle end:    %f degrees' % self.AngleEnd
-        print '    Wire Radius:  %f' % self.wireRadius
+        print('GA Wire arc specification:')
+        print('    Tag:          %d' % self.tag)
+        print('    Segments:     %d' % self.segments)
+        print('    Arc Radius:   %f m (%.2f in)' % (self.radius, inches(self.radius)))
+        print('    Angle start:  %f degrees' % self.angleStart)
+        print('    Angle end:    %f degrees' % self.AngleEnd)
+        print('    Wire Radius:  %f' % self.wireRadius)
         return
 
 class Helix(object):
@@ -108,23 +111,23 @@ class Helix(object):
         self.tobj = None
         return
 
-    dump():
-        print 'GH Helix/Spiral specification:'
+    def dump(self):
+        print('GH Helix/Spiral specification:')
         if self.length == 0:
-            print '    (Spiral)'
+            print('    (Spiral)')
         elif self.length > 0:
-            print '    (Right Handed Helix)'
+            print('    (Right Handed Helix)')
         else:
-            print '    (Left Handed Helix)'
-        print '    Segment Tag:         %d' % self.tag
-        print '    Segments:            %d' % self.segments
-        print '    Turn Spacing:        %f m (%.2f in)' % (self.spacing, inches(self.spacing))
-        print '    Helix Length HL:     %f m (%.2f in)' % (self.length, inches(self.length))
-        print '    Radius in x @ z=0:   %f m (%.2f in)' % (self.radiusXZ0, inches(self.radiusXZ0))
-        print '    Radius in y @ z=0:   %f m (%.2f in)' % (self.radiusYZ0, inches(self.radiusYZ0))
-        print '    Radius in x @ z=HL:  %f m (%.2f in)' % (self.radiusXZhl, inches(self.radiusXZhl))
-        print '    Radius in y @ z=HL:  %f m (%.2f in)' % (self.radiusYZhl, inches(self.radiusYZhl))
-        print '    Wire Radius:         %f' % self.radius
+            print('    (Left Handed Helix)')
+        print('    Segment Tag:         %d' % self.tag)
+        print('    Segments:            %d' % self.segments)
+        print('    Turn Spacing:        %f m (%.2f in)' % (self.spacing, inches(self.spacing)))
+        print('    Helix Length HL:     %f m (%.2f in)' % (self.length, inches(self.length)))
+        print('    Radius in x @ z=0:   %f m (%.2f in)' % (self.radiusXZ0, inches(self.radiusXZ0)))
+        print('    Radius in y @ z=0:   %f m (%.2f in)' % (self.radiusYZ0, inches(self.radiusYZ0)))
+        print('    Radius in x @ z=HL:  %f m (%.2f in)' % (self.radiusXZhl, inches(self.radiusXZhl)))
+        print('    Radius in y @ z=HL:  %f m (%.2f in)' % (self.radiusYZhl, inches(self.radiusYZhl)))
+        print('    Wire Radius:         %f' % self.radius)
         return
 
     def addTaper(self, tobj):
@@ -160,10 +163,10 @@ class Cylinder(object):
         return
 
     def dump(self):
-            print 'GR Generate cylindrical structure:'
-            print '    Tag Increment:                     %d' % self.tagIncrement
-            print '    Number of times structure occurs:  %d' % self.numOccurrances
-        return
+            print('GR Generate cylindrical structure:')
+            print('    Tag Increment:                     %d' % self.tagIncrement)
+            print('    Number of times structure occurs:  %d' % self.numOccurrances)
+            return
 
 class Transform(object):
     """
@@ -185,16 +188,16 @@ class Transform(object):
         return
 
     def dump(self):
-        print 'GM Coordinate transformation:'
-        print '    Tag Increment:                %d' % self.tagIncrement
-        print '    New Structs                   %d' % self.newStructs
-        print '    Rotation about x:             %f degrees' % self.rotationX
-        print '    Rotation about y:             %f degrees' % self.rotationY
-        print '    Rotation about z:             %f degrees' % self.rotationZ
-        print '    Translation in x:             %f m (%.2f in)' % (self.translationX, inches(self.translationX))
-        print '    Translation in y:             %f m (%.2f in)' % (self.translationY, inches(self.translationY))
-        print '    Translation in z:             %f m (%.2f in)' % (self.translationZ, inches(self.translationZ))
-        print '    Initial Translation Segment:  %d' % int(round(self.its))
+        print('GM Coordinate transformation:')
+        print('    Tag Increment:                %d' % self.tagIncrement)
+        print('    New Structs                   %d' % self.newStructs)
+        print('    Rotation about x:             %f degrees' % self.rotationX)
+        print('    Rotation about y:             %f degrees' % self.rotationY)
+        print('    Rotation about z:             %f degrees' % self.rotationZ)
+        print('    Translation in x:             %f m (%.2f in)' % (self.translationX, inches(self.translationX)))
+        print('    Translation in y:             %f m (%.2f in)' % (self.translationY, inches(self.translationY)))
+        print('    Translation in z:             %f m (%.2f in)' % (self.translationZ, inches(self.translationZ)))
+        print('    Initial Translation Segment:  %d' % int(round(self.its)))
         return
 
 class Scale(object):
@@ -208,8 +211,8 @@ class Scale(object):
         return
 
     def dump(self):
-        print 'GS Scale Structure Domensions:'
-        print '    Scale Factor:                 %f' % self.factor
+        print('GS Scale Structure Domensions:')
+        print('    Scale Factor:                 %f' % self.factor)
         return
 
 class GeometryEnd(object):
@@ -222,16 +225,16 @@ class GeometryEnd(object):
         self.groundPlane = int(parts[1])
         return
 
-    def dump():
-        print '    Ground Plane Flag:   %d' % self.groundPlane, 
+    def dump(self):
+        print('    Ground Plane Flag:   %d' % self.groundPlane, end='')
         if self.groundPlane == 0:
-            print ' (No Ground Plane Present)'
+            print(' (No Ground Plane Present)')
         elif self.groundPlane == 1:
-            print ' (Ground Plane - Current Expansion Modified)'
+            print(' (Ground Plane - Current Expansion Modified)')
         elif self.groundPlane == -1:
-            print ' (Ground Plane - Current Expansion Not Modified)'
+            print(' (Ground Plane - Current Expansion Not Modified)')
         else:
-            print ' (Unknown Value)'
+            print(' (Unknown Value)')
         return
 
 # Classes for each subsection
@@ -239,7 +242,7 @@ class Geometry(object):
     """
     Antenna geometry information
     """
-    def __init(self):
+    def __init__(self):
         self.lastWireAdded = None
         self.wiresInOrder = []
         self.wires = {}
@@ -250,7 +253,7 @@ class Geometry(object):
         return
 
     def checkDone(self):
-        if self.end == None:
+        if self.end is not None:
             raise ValueError('Geometry input after an END')
 
     def addWire(self, wobj):
@@ -266,9 +269,9 @@ class Geometry(object):
         self.checkDone()
         if hobj.tag in self.wires:
             raise ValueError('Duplicate wire tag: <%s>' % wobj.line)
-        self.wires[wobj.tag] = wobj
-        self.wiresInOrder.append(wobj)
-        self.lastWireAdded = wobj
+        self.wires[hobj.tag] = hobj
+        self.wiresInOrder.append(hobj)
+        self.lastWireAdded = hobj
         return
 
     def addCylinder(self, cobj):
@@ -279,7 +282,7 @@ class Geometry(object):
 
     def addTransform(self, tobj):
         self.checkDone()
-        self.transforms.append(wobj)
+        self.transforms.append(tobj)
         # -spc- TODO I ~think that at this point we need to run each transform against the wires we
         # have to this point, in case tranforms and new wires are interleaved. Check xnec2c handling
         return
@@ -296,15 +299,464 @@ class Geometry(object):
         self.lastWireAdded.addTaper(tobj)
         return
 
-    def end(self, eobj):
-        self.end = eobj
+    def dump(self):
+        for item in self.wiresInOrder:
+            item.dump()
+        for t in self.transforms:
+            t.dump()
+        for c in self.cylinders:
+            c.dump()
+        for s in self.scales:
+            s.dump()
+        if self.end is not None:
+            self.end.dump()
+        return
+
+class Frequency(object):
+    """
+    Frequency sweep definition (FR card)
+    """
+    def __init__(self, line):
+        parts = line.split()
+        self.stepping  = int(parts[1])    # 0=linear, 1=multiplicative
+        self.numSteps  = int(parts[2])
+        self.frequency = float(parts[5])  # MHz
+        self.increment = float(parts[6])
+        return
+
+    def dump(self):
+        print('FR Frequency:')
+        if self.stepping == 0:
+            print('    Linear Stepping')
+            endfreq = self.frequency + (self.numSteps * self.increment)
+        elif self.stepping == 1:
+            print('    Multiplicative Stepping')
+            endfreq = self.frequency
+            for _ in range(self.numSteps):
+                endfreq = endfreq * self.increment
+        else:
+            print('    Unexpected stepping value %d' % self.stepping)
+            endfreq = self.frequency
+        print('    Number of Steps:    %d' % self.numSteps)
+        print('    Frequency:          %f MHz' % self.frequency)
+        print('    Increment:          %f' % self.increment)
+        print('    Ending Frequency:   %f MHz [calculated]' % endfreq)
         return
 
 class Excitation(object):
     """
-    Excitation information for the model
+    Excitation source (EX card)
     """
-    def __init(self):
+    def __init__(self, line):
+        parts = line.split()
+        self.type    = int(parts[1])
+        self.tag     = int(parts[2])
+        self.segment = int(parts[3])
+        self.i4      = int(parts[4])
+        self.f1 = float(parts[5])
+        self.f2 = float(parts[6])
+        self.f3 = float(parts[7])
+        # plane wave and current source types use additional fields
+        if self.type in [1, 2, 3, 4]:
+            self.f4 = float(parts[8])  if len(parts) > 8  else 0.0
+            self.f5 = float(parts[9])  if len(parts) > 9  else 0.0
+        if self.type in [1, 2, 3]:
+            self.f6 = float(parts[10]) if len(parts) > 10 else 0.0
+        return
+
+    def dump(self):
+        print('EX Excitation:')
+        if self.type == 0:
+            print('    Voltage Source')
+        elif self.type == 1:
+            print('    Incident Plane Wave, linear polarization')
+        elif self.type == 2:
+            print('    Incident Plane Wave, right hand elliptic polarization')
+        elif self.type == 3:
+            print('    Incident Plane Wave, left hand elliptic polarization')
+        elif self.type == 4:
+            print('    Elementary current source')
+        elif self.type == 5:
+            print('    Voltage Source (current-slope-discontinuity)')
+        else:
+            print('    Unknown Excitation type %d' % self.type)
+            return
+        if self.type in [0, 5]:
+            print('    Driven Tag:      %d' % self.tag)
+            print('    Driven Segment:  %d' % self.segment)
+            tmp = '%02d' % self.i4
+            col19 = (tmp[0] == '1')
+            col20 = (tmp[1] == '1')
+            if col19:
+                print('    maximum relative admittance matrix asymmetry for source segment and network connection will be calculated and printed')
+            if col20:
+                print('    the input impedance at voltage sources is always printed directly before the segment currents in the output')
+            print('    Real part:       %f volts' % self.f1)
+            print('    Imaginary part:  %f volts' % self.f2)
+            if col20:
+                print('    Normalization constant for impedance:  %f' % self.f3)
+        elif self.type in [1, 2, 3]:
+            tmp = '%01d' % self.i4
+            if tmp[0] == '1':
+                print('    maximum relative admittance matrix asymmetry for network connections will be calculated')
+            print('    Number of Theta angles:         %d' % self.tag)
+            print('    Number of Phi angles:           %d' % self.segment)
+            print('    Incident Wave vector Theta:     %f degrees' % self.f1)
+            print('    Incident Wave vector Phi:       %f degrees' % self.f2)
+            print('    Polarization angle Eta:         %f degrees' % self.f3)
+            print('    Theta angle stepping increment: %f degrees' % self.f4)
+            print('    Phi angle stepping increment:   %f degrees' % self.f5)
+            print('    Ratio of minor to major Axes:   %f degrees' % self.f6)
+        else:
+            # type == 4
+            tmp = '%01d' % self.i4
+            if tmp[0] == '1':
+                print('    maximum relative admittance matrix asymmetry for network connections will be calculated')
+            print('    X position:     %f m (%.2f in)' % (self.f1, inches(self.f1)))
+            print('    Y position:     %f m (%.2f in)' % (self.f2, inches(self.f2)))
+            print('    Z position:     %f m (%.2f in)' % (self.f3, inches(self.f3)))
+            print('    Alpha:          %f degrees' % self.f4)
+            print('    Beta:           %f degrees' % self.f5)
+            print('    Current Moment: %f' % self.f5)
+        return
+
+class Ground(object):
+    """
+    Ground parameters (GN card)
+    """
+    def __init__(self, line):
+        parts = line.split()
+        self.type = int(parts[1])  # -1=free space, 0=reflect coeff, 1=perfect, 2=Sommerfeld
+        self.numRadials = 0
+        self.dielectric = 0.0
+        self.conductivity = 0.0
+        self.radialRadius = 0.0
+        self.radialWireRadius = 0.0
+        self.cliffDielectric = 0.0
+        self.cliffConductivity = 0.0
+        self.cliffDist = 0.0
+        self.cliffHeight = 0.0
+        if self.type == -1:
+            return
+        self.numRadials   = int(parts[2])
+        self.dielectric   = float(parts[5])
+        self.conductivity = float(parts[6])
+        if self.numRadials == 0:
+            # cliff problem
+            self.cliffDielectric   = float(parts[7])
+            self.cliffConductivity = float(parts[8])
+            self.cliffDist         = float(parts[9])
+            self.cliffHeight       = float(parts[10])
+        else:
+            self.radialRadius     = float(parts[7])
+            self.radialWireRadius = float(parts[8])
+        return
+
+    def dump(self):
+        print('GN Ground parameters:')
+        if self.type == -1:
+            print('    Free space (nullifies any previous ground definitions)')
+            return
+        if self.type == 0:
+            print('    Finite ground, reflection-coefficient approximation')
+        elif self.type == 1:
+            print('    Perfectly conducting ground')
+        elif self.type == 2:
+            print('    Finite ground, Sommerfeld/Norton method')
+        else:
+            print('    Unexpected ground-type flag %d' % self.type)
+        print('    Relative Dielectric Constant:  %f' % self.dielectric)
+        print('    Conductivity:                  %f (mhos/meter)' % self.conductivity)
+        print('    Number of Radials:             %d' % self.numRadials)
+        if self.numRadials == 0:
+            print('    Relative Dielectric Constant (second medium):   %f' % self.cliffDielectric)
+            print('    Conductivity (second medium):                   %f mhos/meter' % self.cliffConductivity)
+            print('    Distance from origin to join between mediums:   %f m (%.2f in)' % (self.cliffDist, inches(self.cliffDist)))
+            print('    Distance medium 2 is below medium 1:            %f m (%.2f in)' % (self.cliffHeight, inches(self.cliffHeight)))
+        else:
+            print('    Radius of radial screen:       %f m (%.2f in)' % (self.radialRadius, inches(self.radialRadius)))
+            print('    Radius of radial wires:        %f m (%.2f in)' % (self.radialWireRadius, inches(self.radialWireRadius)))
+        return
+
+class AdditionalGround(object):
+    """
+    Additional ground parameters (GD card)
+    """
+    def __init__(self, line):
+        parts = line.split()
+        self.dielectric   = float(parts[5])
+        self.conductivity = float(parts[6])
+        self.cliffDist    = float(parts[7])
+        self.cliffHeight  = float(parts[8])
+        return
+
+    def dump(self):
+        print('GD Additional ground parameters:')
+        print('    Relative Dielectric Constant (second medium):   %f' % self.dielectric)
+        print('    Conductivity (second medium):                   %f mhos/meter' % self.conductivity)
+        print('    Distance from origin to join between mediums:   %f m (%.2f in)' % (self.cliffDist, inches(self.cliffDist)))
+        print('    Distance medium 2 is below medium 1:            %f m (%.2f in)' % (self.cliffHeight, inches(self.cliffHeight)))
+        return
+
+class Loading(object):
+    """
+    Segment loading (LD card)
+    """
+    def __init__(self, line):
+        parts = line.split()
+        self.type = int(parts[1])  # -1=clear all, 0-5=type
+        if self.type == -1:
+            return
+        self.tag      = int(parts[2])
+        self.segFirst = int(parts[3])
+        self.segLast  = int(parts[4])
+        self.z1 = float(parts[5])
+        self.z2 = float(parts[6])
+        self.z3 = float(parts[7])
+        return
+
+    def dump(self):
+        print('LD Loading:')
+        if self.type == -1:
+            print('    Short all loads (nullifies any previous loads)')
+            return
+        if self.type == 0:
+            print('    Series RLC, input Ohms, Henries, Farads')
+        elif self.type == 1:
+            print('    Parallel RLC, input Ohms, Henries, Farads')
+        elif self.type == 2:
+            print('    Series RLC, input Ohms/meter, Henries/meter, Farads/meter')
+        elif self.type == 3:
+            print('    Parallel RLC, input Ohms/meter, Henries/meter, Farads/meter')
+        elif self.type == 4:
+            print('    Impedance, input resistance and reactance in Ohms')
+        elif self.type == 5:
+            print('    Wire conductivity, mhos/meter')
+        else:
+            print('    Unexpected value of %d for Load Type' % self.type)
+        print('    Tag:             %d' % self.tag)
+        print('    Start segment:   %d' % self.segFirst)
+        print('    End segment:     %d' % self.segLast)
+        if self.type in [0, 1]:
+            print('    Resistance:  %f Ohms' % self.z1)
+            print('    Inductance:  %f Henries' % self.z2)
+            print('    Capacitance: %f Farads' % self.z3)
+        elif self.type in [2, 3]:
+            print('    Resistance:  %f Ohms/meter' % self.z1)
+            print('    Inductance:  %f Henries/meter' % self.z2)
+            print('    Capacitance: %f Farads/meter' % self.z3)
+        elif self.type == 4:
+            print('    Resistance:  %f Ohms' % self.z1)
+            print('    Reactance:   %f Ohms' % self.z2)
+        else:
+            print('    Conductivity:  %f mhos/meter' % self.z1)
+        return
+
+class Network(object):
+    """
+    Two-port network (NT card)
+    """
+    def __init__(self, line):
+        parts = line.split()
+        self.tag1 = int(parts[1])
+        self.seg1 = int(parts[2])
+        self.tag2 = int(parts[3])
+        self.seg2 = int(parts[4])
+        self.y11r = float(parts[5])
+        self.y11i = float(parts[6])
+        self.y12r = float(parts[7])
+        self.y12i = float(parts[8])
+        self.y22r = float(parts[9])
+        self.y22i = float(parts[10])
+        return
+
+    def dump(self):
+        print('NT Networks:')
+        print('    Port 1 tag:       %d' % self.tag1)
+        print('    Port 1 segment:   %d' % self.seg1)
+        print('    Port 2 tag:       %d' % self.tag2)
+        print('    Port 2 segment:   %d' % self.seg2)
+        print('    Real part of element (1, 1):        %f mhos' % self.y11r)
+        print('    Imaginary part of element (1, 1):   %f mhos' % self.y11i)
+        print('    Real part of element (1, 2):        %f mhos' % self.y12r)
+        print('    Imaginary part of element (1, 2):   %f mhos' % self.y12i)
+        print('    Real part of element (2, 2):        %f mhos' % self.y22r)
+        print('    Imaginary part of element (2, 2):   %f mhos' % self.y22i)
+        return
+
+class TransmissionLine(object):
+    """
+    Transmission line (TL card)
+    """
+    def __init__(self, line):
+        parts = line.split()
+        self.tag1 = int(parts[1])
+        self.seg1 = int(parts[2])
+        self.tag2 = int(parts[3])
+        self.seg2 = int(parts[4])
+        self.impedance = float(parts[5])
+        self.length    = float(parts[6])
+        self.shunt1r   = float(parts[7])
+        self.shunt1i   = float(parts[8])
+        self.shunt2r   = float(parts[9])
+        self.shunt2i   = float(parts[10])
+        return
+
+    def dump(self):
+        print('TL Transmission Line:')
+        print('    Port 1 tag:       %d' % self.tag1)
+        print('    Port 1 segment:   %d' % self.seg1)
+        print('    Port 2 tag:       %d' % self.tag2)
+        print('    Port 2 segment:   %d' % self.seg2)
+        print('    Characteristic impedance:                   %f ohms' % self.impedance)
+        print('    Length:                                     %f m (%.2f in)' % (self.length, inches(self.length)))
+        print('    Real part of shunt admittance, end 1        %f mhos' % self.shunt1r)
+        print('    Imaginary part of shunt admittance, end 1   %f mhos' % self.shunt1i)
+        print('    Real part of shunt admittance, end 2        %f mhos' % self.shunt2r)
+        print('    Imaginary part of shunt admittance, end 2   %f mhos' % self.shunt2i)
+        return
+
+class RadiationPattern(object):
+    """
+    Radiation pattern request (RP card)
+    """
+    def __init__(self, line):
+        parts = line.split()
+        self.mode       = int(parts[1])
+        self.numTheta   = int(parts[2])
+        self.numPhi     = int(parts[3])
+        self.xnda       = int(parts[4])
+        self.thetaStart = float(parts[5])
+        self.phiStart   = float(parts[6])
+        self.thetaStep  = float(parts[7])
+        self.phiStep    = float(parts[8])
+        self.radialDist = float(parts[9])
+        self.gainNorm   = float(parts[10])
+        return
+
+    def dump(self):
+        print('RP Radiation Pattern:')
+        if self.mode == 0:
+            print('    Mode: Normal (space-wave fields)')
+        elif self.mode == 1:
+            print('    Mode: Surface wave propagating along ground')
+        elif self.mode == 2:
+            print('    Mode: Linear cliff with antenna above upper level')
+        elif self.mode == 3:
+            print('    Mode: Circular cliff centered at origin, antenna above upper level')
+        elif self.mode == 4:
+            print('    Mode: Radial wire ground screen centered at origin')
+        elif self.mode == 5:
+            print('    Mode: Radial wire ground screen and linear cliff')
+        elif self.mode == 6:
+            print('    Mode: Radial wire ground screen and circular cliff')
+        if self.mode == 1:
+            print('    Points in z:           %d' % self.numTheta)
+        else:
+            print('    Points in theta:       %d' % self.numTheta)
+        print('    Points in phi:         %d' % self.numPhi)
+        xnda = '%04d' % self.xnda
+        if xnda[0] == '0':
+            print('    major-axis, minor-axis, and total gain printed')
+        elif xnda[0] == '1':
+            print('    vertical, horizontal, and total gain printed')
+        else:
+            print('    Unexpected value in XNDA field %s' % self.xnda)
+        if xnda[1] == '0':
+            print('    No normalized gain')
+        elif xnda[1] == '1':
+            print('    Major axis gain normalized')
+        elif xnda[1] == '2':
+            print('    Minor axis gain normalized')
+        elif xnda[1] == '3':
+            print('    Vertical axis gain normalized')
+        elif xnda[1] == '4':
+            print('    Horizontal axis gain normalized')
+        elif xnda[1] == '5':
+            print('    Total gain normalized')
+        else:
+            print('    Unexpected value in XNDA field %s' % self.xnda)
+        if xnda[2] == '0':
+            print('    Use power gain')
+        elif xnda[2] == '1':
+            print('    Use directive gain')
+        else:
+            print('    Unexpected value in XNDA field %s' % self.xnda)
+        if xnda[3] == '0':
+            print('    No averaging')
+        elif xnda[3] == '1':
+            print('    Average gain computed')
+        elif xnda[3] == '2':
+            print('    Average gain computed, suppress printing')
+        else:
+            print('    Unexpected value in XNDA field %s' % self.xnda)
+        if self.mode == 1:
+            print('    Initial Z coordinate:      %f m (%.2f in)' % (self.thetaStart, inches(self.thetaStart)))
+            print('    Initial phi angle:         %f degrees' % self.phiStart)
+            print('    Increment for z:           %f m (%.2f in)' % (self.thetaStep, inches(self.thetaStep)))
+            print('    Increment for phi:         %f degrees' % self.phiStep)
+            print('    Cylindrical coord phi:     %f m (%.2f in)' % (self.radialDist, inches(self.radialDist)))
+            print('    Range of z:                %f - %f m, %.2f - %.2f in [calculated]' % (self.thetaStart, self.thetaStart + (self.numTheta * self.thetaStep), inches(self.thetaStart), inches(self.thetaStart + (self.numTheta * self.thetaStep))))
+            print('    Range of phi:              %f - %f degrees [calculated]' % (self.phiStart, self.phiStart + (self.numPhi * self.phiStep)))
+        else:
+            print('    Initial theta angle:       %f degrees' % self.thetaStart)
+            print('    Initial phi angle:         %f degrees' % self.phiStart)
+            print('    Increment for theta:       %f degrees' % self.thetaStep)
+            print('    Increment for phi:         %f degrees' % self.phiStep)
+            print('    Radial distance:           %f m (%.2f in)' % (self.radialDist, inches(self.radialDist)))
+            print('    Range of theta:            %f - %f degrees [calculated]' % (self.thetaStart, self.thetaStart + (self.numTheta * self.thetaStep)))
+            print('    Range of phi:              %f - %f degrees [calculated]' % (self.phiStart, self.phiStart + (self.numPhi * self.phiStep)))
+        print('    Gain normalization factor: %f' % self.gainNorm)
+        return
+
+class NearField(object):
+    """
+    Near field request (NE or NH card)
+    """
+    def __init__(self, line, fieldType):
+        parts = line.split()
+        self.fieldType  = fieldType     # 'E' or 'H'
+        self.coordType  = int(parts[1]) # 0=rectangular, 1=spherical
+        self.nx = int(parts[2])
+        self.ny = int(parts[3])
+        self.nz = int(parts[4])
+        self.x  = float(parts[5])
+        self.y  = float(parts[6])
+        self.z  = float(parts[7])
+        self.dx = float(parts[8])
+        self.dy = float(parts[9])
+        self.dz = float(parts[10])
+        return
+
+    def dump(self):
+        if self.fieldType == 'H':
+            print('NH Near Magnetic Field:')
+        else:
+            print('NE Near Electric Field:')
+        if self.coordType == 0:
+            print('    Using Rectangular Coordinates')
+            print('    Points desired in X:     %d' % self.nx)
+            print('    Points desired in Y:     %d' % self.ny)
+            print('    Points desired in Z:     %d' % self.nz)
+            print('    First field point X:     %f m (%.2f in)' % (self.x, inches(self.x)))
+            print('    First field point Y:     %f m (%.2f in)' % (self.y, inches(self.y)))
+            print('    First field point Z:     %f m (%.2f in)' % (self.z, inches(self.z)))
+            print('    Stepping increment in X  %f m (%.2f in)' % (self.dx, inches(self.dx)))
+            print('    Stepping increment in Y  %f m (%.2f in)' % (self.dy, inches(self.dy)))
+            print('    Stepping increment in Z  %f m (%.2f in)' % (self.dz, inches(self.dz)))
+        elif self.coordType == 1:
+            print('    Using Spherical Coordinates')
+            print('    Points desired in r:         %d' % self.nx)
+            print('    Points desired in phi:       %d' % self.ny)
+            print('    Points desired in theta:     %d' % self.nz)
+            print('    First field point r:         %f m (%.2f in)' % (self.x, inches(self.x)))
+            print('    First field point phi:       %f degrees' % self.y)
+            print('    First field point theta:     %f degrees' % self.z)
+            print('    Stepping increment in r:     %f m (%.2f in)' % (self.dx, inches(self.dx)))
+            print('    Stepping increment in phi:   %f degrees' % self.dy)
+            print('    Stepping increment in theta: %f degrees' % self.dz)
+        else:
+            print('    Unexpected coordinate type argument %d' % self.coordType)
         return
 
 # The overall model
@@ -319,14 +771,28 @@ class NecModel(object):
                     'GC':self.GC, 'CP':self.CP, 'EK':self.EK, 'EX':self.EX, 'FR':self.FR, 'GN':self.GN, 'KH':self.KH,
                     'LD':self.LD, 'GD':self.GD, 'NH':self.NH, 'NE':self.NE, 'NT':self.NT, 'NX':self.NX, 'RP':self.RP,
                     'PQ':self.PQ, 'PT':self.PT, 'TL':self.TL, 'WG':self.WG, 'XQ':self.XQ, 'EN':self.EN}
+        self.opts = {}
         if verbose:
             self.opts['verbose'] = True
 
         self.comments = []
         self.geometry = Geometry()
 
+        # Program control storage
+        self.excitations      = []
+        self.frequencies      = []
+        self.ground           = None
+        self.additionalGround = None
+        self.loadings         = []
+        self.networks         = []
+        self.transmissionLines = []
+        self.radiationPatterns = []
+        self.nearFields       = []
+        self.extendedKernel   = False
+        self.interactionRange = None
+
         return
-    
+
     def inches(self, meters):
         return float(meters* 39.3700787)
 
@@ -337,7 +803,7 @@ class NecModel(object):
         if comm != '':
             self.comments.append(comm)
         if 'verbose' in self.opts:
-            print 'Comment: %s' % comm
+            print('Comment: %s' % comm)
         return
 
     def CE(self, line):
@@ -346,8 +812,8 @@ class NecModel(object):
         comm = sline[3:]
         if comm != '':
             self.comments.append(comm)
-        if verbose in self.opts:
-            print 'Com End: %s' % comm
+        if 'verbose' in self.opts:
+            print('Com End: %s' % comm)
         return
 
     #
@@ -384,7 +850,7 @@ class NecModel(object):
         nw = Wire(line)
         if 'verbose' in self.opts:
             nw.dump()
-        self.geometry.addWire(nc)
+        self.geometry.addWire(nw)
         return
 
     def GC(self, line):
@@ -400,7 +866,7 @@ class NecModel(object):
         ge = GeometryEnd(line)
         if 'verbose' in self.opts:
             ge.dump()
-        self.geometry.end(ge)
+        self.geometry.end = ge
         return
 
     def GF(self, line):
@@ -434,14 +900,14 @@ class NecModel(object):
         # to three digits, and any non-zero digit is set to one
         dstr = '%03d' % REFL
         if 'verbose' in self.opts:
-            print 'GX Reflection in coordinate plane:'
-            print '    Tag Increment:      %d' % TNI
+            print('GX Reflection in coordinate plane:')
+            print('    Tag Increment:      %d' % TNI)
             if dstr[0] == '1':
-                print '    Reflected along X axis'
+                print('    Reflected along X axis')
             if dstr[1] == '1':
-                print '    Reflected along Y axis'
+                print('    Reflected along Y axis')
             if dstr[2] == '1':
-                print '    Reflected along Z axis'
+                print('    Reflected along Z axis')
         return
 
     def SP(self, line):
@@ -456,22 +922,22 @@ class NecModel(object):
         Y2 = float(parts[7])
         Z2 = float(parts[8])
         if 'verbose' in self.opts:
-            print 'SP Surface Patch:'
+            print('SP Surface Patch:')
             if NS == 0:
                 # Arbitrary shape
-                print '    Shape: Arbitrary'
+                print('    Shape: Arbitrary')
             elif NS == 1:
-                print '    Shape: Rectangular'
+                print('    Shape: Rectangular')
             elif NS == 2:
-                print '    Shape: Triangular'
+                print('    Shape: Triangular')
             elif NS == 3:
-                print '    Shape: Quadrilateral'
-            print '    X1     %f m (%.2f in)' % (X1, inches(X1))
-            print '    Y1     %f m (%.2f in)' % (Y1, inches(Y1))
-            print '    Z1     %f m (%.2f in)' % (Z1, inches(Z1))
-            print '    X2     %f m (%.2f in)' % (X2, inches(X2))
-            print '    Y2     %f m (%.2f in)' % (Y2, inches(Y2))
-            print '    Z2     %f m (%.2f in)' % (Z2, inches(Z2))
+                print('    Shape: Quadrilateral')
+            print('    X1     %f m (%.2f in)' % (X1, inches(X1)))
+            print('    Y1     %f m (%.2f in)' % (Y1, inches(Y1)))
+            print('    Z1     %f m (%.2f in)' % (Z1, inches(Z1)))
+            print('    X2     %f m (%.2f in)' % (X2, inches(X2)))
+            print('    Y2     %f m (%.2f in)' % (Y2, inches(Y2)))
+            print('    Z2     %f m (%.2f in)' % (Z2, inches(Z2)))
         return
 
     def SM(self, line):
@@ -487,15 +953,15 @@ class NecModel(object):
         Y2 = float(parts[7])
         Z2 = float(parts[8])
         if 'verbose' in self.opts:
-            print 'SM Multiple Patch Surface:'
-            print '    Patches across X:     %d' % NX
-            print '    Patches across Y:     %d' % NY
-            print '    Corner 1 x:           %f m (%.2f in)' % (X1, inches(X1))
-            print '    Corner 1 y:           %f m (%.2f in)' % (Y1, inches(Y1))
-            print '    Corner 1 z:           %f m (%.2f in)' % (Z1, inches(Z1))
-            print '    Corner 2 x:           %f m (%.2f in)' % (X2, inches(X2))
-            print '    Corner 2 y:           %f m (%.2f in)' % (Y2, inches(Y2))
-            print '    Corner 2 z:           %f m (%.2f in)' % (Z2, inches(Z2))
+            print('SM Multiple Patch Surface:')
+            print('    Patches across X:     %d' % NX)
+            print('    Patches across Y:     %d' % NY)
+            print('    Corner 1 x:           %f m (%.2f in)' % (X1, inches(X1)))
+            print('    Corner 1 y:           %f m (%.2f in)' % (Y1, inches(Y1)))
+            print('    Corner 1 z:           %f m (%.2f in)' % (Z1, inches(Z1)))
+            print('    Corner 2 x:           %f m (%.2f in)' % (X2, inches(X2)))
+            print('    Corner 2 y:           %f m (%.2f in)' % (Y2, inches(Y2)))
+            print('    Corner 2 z:           %f m (%.2f in)' % (Z2, inches(Z2)))
         return
 
     def SC(self, line):
@@ -508,10 +974,10 @@ class NecModel(object):
         Y3 = float(parts[4])
         Z3 = float(parts[5])
         if 'verbose' in self.opts:
-            print 'SC Surface Multiple Patch Continuation:'
-            print '    Corner 3 x:           %f m (%.2f in)' % (X3, inches(X3))
-            print '    Corner 3 y:           %f m (%.2f in)' % (Y3, inches(Y3))
-            print '    Corner 3 z:           %f m (%.2f in)' % (Z3, inches(Z3))
+            print('SC Surface Multiple Patch Continuation:')
+            print('    Corner 3 x:           %f m (%.2f in)' % (X3, inches(X3)))
+            print('    Corner 3 y:           %f m (%.2f in)' % (Y3, inches(Y3)))
+            print('    Corner 3 z:           %f m (%.2f in)' % (Z3, inches(Z3)))
         return
 
     #
@@ -521,539 +987,204 @@ class NecModel(object):
     def CP(self, line):
         # Maximum Coupling Calculation
         if 'verbose' in self.opts:
-            print 'CP Maximum Coupling Calculation:'
-            print '    Not supported in nec2c'
+            print('CP Maximum Coupling Calculation:')
+            print('    Not supported in nec2c')
         return
 
     def EK(self, line):
         # Extended thin-wire kernel
         parts = line.split()
         I1 = int(parts[1])
+        self.extendedKernel = (I1 == 0)
         if 'verbose' in self.opts:
-        print 'EK Extended thin-wire kernel:'
+            print('EK Extended thin-wire kernel:')
             if I1 == 0:
-                print '    Initiate extended thin-wire kernel'
+                print('    Initiate extended thin-wire kernel')
             elif I1 == -1:
-                print '    Return to standard thin-wire kernel'
+                print('    Return to standard thin-wire kernel')
             else:
-                print '    Unexpected value %d' % I1
+                print('    Unexpected value %d' % I1)
         return
 
     def EX(self, line):
         # Excitation
-        parts = line.split()
-        TYPE = int(parts[1])
-        I2   = int(parts[2])
-        I3   = int(parts[3])
-        I4   = int(parts[4])
-        F1 = float(parts[5])
-        F2 = float(parts[6])
-        F3 = float(parts[7])
-        if type not in [0,1,2,3,4,5]:
-            if 'verbose' in self.opts:
-                print '    Unknown Excitation type %d' % TYPE
-            return
+        ex = Excitation(line)
+        self.excitations.append(ex)
         if 'verbose' in self.opts:
-            print 'EX Excitation:'
-            if TYPE == 0:
-                print '    Voltage Source'
-            elif TYPE == 1:
-                print '    Incident Plane Wave, linear polarization'
-            elif TYPE == 2:
-                print '    Incident Plane Wave, right hand elliptic polarization'
-            elif TYPE == 3:
-                print '    Incident Plane Wave, left hand elliptic polarization'
-            elif TYPE == 4:
-                print '    Elementary current source'
-            elif TYPE == 5:
-                print '    Voltage Source (current-slope-discontinuity)'
-
-            if TYPE in [0,5]:
-                # voltage
-                print '    Driven Tag:      %d' % I2
-                print '    Driven Segment:  %d' % I3
-                # expand I4 to two positions
-                tmp = '%02d' % I4
-                if tmp[0] == '0':
-                    col19 = False
-                elif tmp[0] == '1':
-                    col19 = True
-                    print '    maximum relative admittance matrix asymmetry for source segment and network connection will be calculated and printed'
-                else:
-                    col19 = False
-                    print 'Unexpected digit <%d> in field I4: %s' % (I4, line)
-                if tmp[1] == '0':
-                    col20 = False
-                elif tmp[1] == '1':
-                    col20 = True
-                    print '    the input impedance at voltage sources is always printed directly before the segment currents in the output'
-                else:
-                    col20 = False
-                    print 'Unexpected digit <%d> in field I4: %s' % (I4, line)
-                print '    Real part:       %f volts' % F1
-                print '    Imaginary part:  %f volts' % F2
-                if (col20):
-                    print '    Normalization constant for impedance:  %f' % F3
-
-            elif TYPE in [1,2,3]:
-                # plane wave
-                print '    Number of Theta angles:      %d' % I2
-                print '    Number of Phi angles:        %d' % I3
-                tmp = '%01d' % I4
-                if tmp[0] == '0':
-                    pass
-                elif tmp[0] == '1':
-                    print '    maximum relative admittance matrix asymmetry for network connections will be calculated'
-                else:
-                    print 'Unexpected digit <%d> in field I4: %s' % (I4, line)
-                print '    Incident Wave vector Theta:     %f degrees' % F1
-                print '    Incident Wave vector Phi:       %f degrees' % F2
-                print '    Polarization angle Eta:         %f degrees' % F3
-                print '    Theta angle stepping increment: %f degrees' % F4
-                print '    Phi angle stepping increment:   %f degrees' % F5
-                print '    Ratio of minor to major Axes:   %f degrees' % F6
-            else:
-                # must be 4 - current source
-                tmp = '%01d' % I4
-                if tmp[0] == '0':
-                    pass
-                elif tmp[0] == '1':
-                    print '    maximum relative admittance matrix asymmetry for network connections will be calculated'
-                else:
-                    print 'Unexpected digit <%d> in field I4: %s' % (I4, line)
-                print '    X position:     %f m (%.2f in)' % (F1, inches(F1))
-                print '    Y position:     %f m (%.2f in)' % (F2, inches(F2))
-                print '    Z position:     %f m (%.2f in)' % (F3, inches(F3))
-                print '    Alpha:          %f degrees'   % F4
-                print '    Beta:           %f degrees'   % F5
-                print '    Current Moment: %f' % F5
+            ex.dump()
         return
 
     def FR(self, line):
         # Frequency
-        parts = line.split()
-        IFRQ = int(parts[1])
-        NFRQ = int(parts[2])
-        NOP1 = int(parts[3])
-        NOP2 = int(parts[4])
-        FREQ = float(parts[5])
-        DELFRQ = float(parts[6])
+        self.frequencies.append(Frequency(line))
         if 'verbose' in self.opts:
-            print 'FR Frequency:'
-            if IFRQ == 0:
-                    print '    Linear Stepping'
-                    endfreq = FREQ + (NFRQ * DELFRQ)
-            elif IFRQ == 1:
-                    print '    Multiplicative Stepping'
-                    endfreq = FREQ
-                    for i in range(NFRQ):
-                        endfreq = endfreq * DELFRQ
-            else:
-                    print '    Unexpected stepping value %d: %s' % (IFRQ, line)
-            print '    Number of Steps:    %d' % NFRQ
-            print '    Frequency:          %f MHz'   % FREQ
-            print '    Increment:          %f' % DELFRQ
-            print '    Ending Frequency:   %f MHz [calculated]' % endfreq
+            self.frequencies[-1].dump()
         return
 
     def GN(self, line):
         # Ground parameters
-        parts  = line.split()
-        IPERF  = int(parts[1])
+        self.ground = Ground(line)
         if 'verbose' in self.opts:
-            print 'GN Ground parameters:'
-        if IPERF == -1:
-            if 'verbose' in self.opts:
-                print '    Free space (nullifies any previous ground definitions)'
-            return
-        NRADL  = int(parts[2])
-        NOP1   = int(parts[3])
-        NOP2   = int(parts[4])
-        EPSE   = float(parts[5])
-        SIG    = float(parts[6])
-        if 'verbose' in self.opts:
-            if IPERF == 0:
-                    print '    Finite ground, reflection-coefficient approximation'
-            elif IPERF == 1:
-                    print '    Perfectly conducting ground'
-            elif IPERF == 2:
-                    print '    Finite ground, Sommerfield/Norton method'
-            else:
-                    print '    Unexpected ground-type flag %d: %s' % (IPERF, line)
-            print '    Relative Dialectric Constant:  %f' % EPSE
-            print '    Conductivity:                  %f (mhos/meter)' % SIG
-            print '    Number of Radials:             %d' % NRADL
-            if NRADL == 0:
-                # cliff problem
-                EPSR2   = float(parts[7])
-                SIG2    = float(parts[8])
-                CLT     = float(parts[9])
-                CHT     = float(parts[10])
-                print '    Relative Dialectric Constant (second medium):   %f'   % EPSR2
-                print '    Conductivity (second medium):                   %f mhos/meter'   % SIG2
-                print '    Distance from origin to join between mediums:   %f m (%.2f in)' % (CLT, inches(CLT))
-                print '    Distance medium 2 is below medium 1:            %f m (%.2f in)' % (CHT, inches(CHT))
-            else:
-                # we have radials
-                SRAD   = float(parts[7])
-                WRAD    = float(parts[8])
-                print '    Radius of radial screen:       %f m (%.2f in)' % (SRAD, inches(SRAD))
-                print '    Radius of radial wires:        %f m (%.2f in)' % (WRAD, inches(WRAD))
+            self.ground.dump()
         return
-zzzzzzz
+
     def KH(self, line):
         # Interaction Approximation Range
-        print 'KH Interaction Approximation Range:'
-        #print '    %s' % line,
         parts  = line.split()
-        RKH  = int(parts[1])
-        print '    Approximation used for interactions over %d wavelengths' % RKH
+        self.interactionRange = int(parts[1])
+        if 'verbose' in self.opts:
+            print('KH Interaction Approximation Range:')
+            print('    Approximation used for interactions over %d wavelengths' % self.interactionRange)
         return
 
     def LD(self, line):
         # Loading
-        print 'LD Loading:'
-        #print '    %s' % line,
-        parts = line.split()
-        LDTYP = int(parts[1])
-        if LDTYP == -1:
-                print '    Short all loads (nullifies any previous loads)'
-                return
-        if LDTYP == 0:
-                print '    Series RLC, input Ohms, Henries, Farads'
-        elif LDTYP == 1:
-                print '    Parallel RLC, input Ohms, Henries, Farads'
-        elif LDTYP == 2:
-                print '    Series RLC, input Ohms/meter, Henries/meter, Farads/meter'
-        elif LDTYP == 3:
-                print '    Parallel RLC, input Ohms/meter, Henries/meter, Farads/meter'
-        elif LDTYP == 4:
-                print '    Impedance, input resistance and reactance in Ohms'
-        elif LDTYP == 5:
-                print '    Wire conductivity, mhos/meter'
+        ld = Loading(line)
+        if ld.type == -1:
+            self.loadings = []
         else:
-                print '    Unexpected value of %d for Load Type: %s' % (LDTYP, line)
-
-        LDTAG = int(parts[2])
-        LDTAGF = int(parts[3])
-        LDTAGT = int(parts[4])
-        print '    Tag:             %d' % LDTAG
-        print '    Start segment:   %d' % LDTAGF
-        print '    End segment:     %d' % LDTAGT
-
-        ZLR = float(parts[5])
-        ZLI = float(parts[6])
-        ZLC = float(parts[7])
-        if LDTYP in [0,1]:
-            units1 = 'Ohms'
-            units2 = 'Henries'
-            units3 = 'Farads'
-            print '    Resistance:  %f %s' % (ZLR, units1)
-            print '    Inductance:  %f %s' % (ZLI, units2)
-            print '    Capacitance: %f %s' % (ZLC, units3)
-        elif LDTYP in [2,3]:
-            units1 = 'Ohms/meter'
-            units2 = 'Henries/meter'
-            units3 = 'Farads/meter'
-            print '    Resistance:  %f %s' % (ZLR, units1)
-            print '    Inductance:  %f %s' % (ZLI, units2)
-            print '    Capacitance: %f %s' % (ZLC, units3)
-        elif LDTYP == 4:
-            ohms = 'Ohms'
-            print '    Resistance:  %f %s' % (ZLR, ohms)
-            print '    Reactance:   %f %s' % (ZLI, ohms)
-        else:
-            # LDTYP=5
-            mhosmeter = 'mhos/meter'
-            print '    Conductivity:  %f %s' % (ZLR, mhosmeter)
+            self.loadings.append(ld)
+        if 'verbose' in self.opts:
+            ld.dump()
         return
 
     def GD(self, line):
         # Additional ground parameters
-        print 'GD Additional ground parameters:'
-        #print '    %s' % line,
-        parts  = line.split()
-        NOP1   = int(parts[1])
-        NOP2   = int(parts[2])
-        NOP3   = int(parts[3])
-        NOP4   = int(parts[4])
-        EPSR2  = float(parts[5])
-        SIG2   = float(parts[6])
-        CLT    = float(parts[7])
-        CHT    = float(parts[8])
-        print '    Relative Dialectric Constant (second medium):   %f'   % EPSR2
-        print '    Conductivity (second medium):                   %f mhos/meter'   % SIG2
-        print '    Distance from origin to join between mediums:   %f m (%.2f in)' % (CLT, inches(CLT))
-        print '    Distance medium 2 is below medium 1:            %f m (%.2f in)' % (CHT, inches(CHT))
-        return
-
-    def nhne(self, line):
-        #print '    %s' % line,
-        parts  = line.split()
-        NEAR   = int(parts[1])
-        NRX    = int(parts[2])
-        NRY    = int(parts[3])
-        NRZ    = int(parts[4])
-        XNR    = float(parts[5])
-        YNR    = float(parts[6])
-        ZNR    = float(parts[7])
-        DXNR   = float(parts[8])
-        DYNR   = float(parts[9])
-        DZNR   = float(parts[10])
-
-        if NEAR == 0:
-            print '    Using Rectangular Coordinates'
-            print '    Points desired in X:     %d'   % NRX
-            print '    Points desired in Y:     %d'   % NRY
-            print '    Points desired in Z:     %d'   % NRZ
-            print '    First field point X:     %f m (%.2f in)' % (XNR, inches(XNR))
-            print '    First field point Y:     %f m (%.2f in)' % (YNR, inches(YNR))
-            print '    First field point Z:     %f m (%.2f in)' % (ZNR, inches(ZNR))
-            print '    Stepping increment in X  %f m (%.2f in)' % (DXNR, inches(DXNR))
-            print '    Stepping increment in Y  %f m (%.2f in)' % (DYNR, inches(DYNR))
-            print '    Stepping increment in Z  %f m (%.2f in)' % (DZNR, inches(DZNR))
-
-        elif NEAR == 1:
-            print '    Using Spherical Coordinates'
-            print '    Points desired in r:         %d'   % NRX
-            print '    Points desired in phi:       %d'   % NRY
-            print '    Points desired in theta:     %d'   % NRZ
-            print '    First field point r:         %f m (%.2f in)' % (XNR, inches(XNR))
-            print '    First field point phi:       %f degrees' % YNR
-            print '    First field point theta:     %f degrees' % ZNR
-            print '    Stepping increment in r:     %f m (%.2f in)' % (DXNR, inches(DXNR))
-            print '    Stepping increment in phi:   %f degrees' % DYNR
-            print '    Stepping increment in theta: %f degrees' % DZNR
-        else:
-            print '    Unexpected coordinate type argument %d: %s' % (NEAR, line)
+        self.additionalGround = AdditionalGround(line)
+        if 'verbose' in self.opts:
+            self.additionalGround.dump()
         return
 
     def NH(self, line):
         # Near Field NH
-        print 'NH Near Magneticic Field:'
-        nhne(self, line)
+        self.nearFields.append(NearField(line, 'H'))
+        if 'verbose' in self.opts:
+            self.nearFields[-1].dump()
         return
 
     def NE(self, line):
         # Near Field NE
-        print 'NE Near Electric Field:'
-        nhne(self, line)
+        self.nearFields.append(NearField(line, 'E'))
+        if 'verbose' in self.opts:
+            self.nearFields[-1].dump()
         return
 
     def NT(self, line):
         # Networks
         # Untested
-        print 'NT Networks:'
-        #print '    %s' % line,
-        parts  = line.split()
-        TAG1   = int(parts[1])
-        SEG1   = int(parts[2])
-        TAG2   = int(parts[3])
-        SEG2   = int(parts[4])
-        Y11R   = float(parts[5])
-        Y11I   = float(parts[6])
-        Y12R   = float(parts[7])
-        Y12I   = float(parts[8])
-        Y22R   = float(parts[9])
-        Y22I   = float(parts[10])
-        print '    Port 1 tag:       %d' % TAG1
-        print '    Port 1 segment:   %d' % SEG1
-        print '    Port 2 tag:       %d' % TAG2
-        print '    Port 2 segment:   %d' % SEG2
-        print '    Real part of element (1, 1):        %f mhos' % Y11R
-        print '    Imaginary part of element (1, 1):   %f mhos' % Y11I
-        print '    Real part of element (1, 2):        %f mhos' % Y12R
-        print '    Imaginary part of element (1, 2):   %f mhos' % Y12I
-        print '    Real part of element (2, 2):        %f mhos' % Y22R
-        print '    Imaginary part of element (2, 2):   %f mhos' % Y22I
+        nt = Network(line)
+        self.networks.append(nt)
+        if 'verbose' in self.opts:
+            nt.dump()
         return
 
     def NX(self, line):
         # Next Structure
-        print 'NX Next Structure:'
-        #print '    %s' % line,
-        print '    Not supported in nec2c'
+        print('NX Next Structure:')
+        #print('    %s' % line, end='')
+        print('    Not supported in nec2c')
         return
 
     def RP(self, line):
         # Radiation Pattern
-        print 'RP Radiation Pattern:'
-        #print '    %s' % line,
-        parts  = line.split()
-        MODE   = int(parts[1])
-        if MODE == 0:
-            print '    Mode: Normal (space-wave fields)'
-        elif MODE == 1:
-            print '    Mode: Surface wave propagating along ground'
-        elif MODE == 2:
-            print '    Mode: Linear cliff with antenna above upper level'
-        elif MODE == 3:
-            print '    Mode: Circular cliff centered at origin, antenna above upper level'
-        elif MODE == 4:
-            print '    Mode: Radial wire ground screen centered at origin'
-        elif MODE == 5:
-            print '    Mode: Radial wire ground screen and linear cliff'
-        elif MODE == 6:
-            print '    Mode: Radial wire ground screen and circular cliff'
-        NTH    = int(parts[2])
-        NPH    = int(parts[3])
-        XNDA   = int(parts[4])
-        THETS   = float(parts[5])
-        PHIS   = float(parts[6])
-        DTH   = float(parts[7])
-        DPH   = float(parts[8])
-        RFLD   = float(parts[9])
-        GNOR   = float(parts[10])
-        if MODE == 1:
-            print '    Points in z:           %d'   % NTH
-        else:
-            print '    Points in theta:       %d'   % NTH
-        print '    Points in phi:         %d'   % NPH
-        xnda = '%04d' % XNDA
-        if xnda[0] == '0':
-            print '    major-axis, minor-axis, and total gain printed'
-        elif xnda[0] == '1':
-            print '    vertical, horizontal, and total gain printed'
-        else:
-            print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
-
-        if xnda[1] == '0':
-            print '    No normalized gain'
-        elif xnda[1] == '1':
-            print '    Major axis gain normalized'
-        elif xnda[1] == '2':
-            print '    Minor axis gain normalized'
-        elif xnda[1] == '3':
-            print '    Vertical axis gain normalized'
-        elif xnda[1] == '4':
-            print '    Horizontal axis gain normalized'
-        elif xnda[1] == '5':
-            print '    Total gain normalized'
-        else:
-            print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
-
-        if xnda[2] == '0':
-            print '    Use power Gain'
-        elif xnda[2] == '1':
-            print '    Use directive gain'
-        else:
-            print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
-
-        if xnda[3] == '0':
-            print '    No averaging'
-        elif xnda[3] == '1':
-            print '    Average gain computed'
-        elif xnda[3] == '2':
-            print '    Average gain computed, supress printing'
-        else:
-            print '    Unexpected value in XNDA field %s : %s' % (XNDA, line)
-
-        if MODE == 1:
-            print '    Initial Z coordinate:      %f m (%.2f in)' % (THETS, inches(THETS))
-            print '    Initial phi angle:         %f degrees' % PHIS
-            print '    Increment for z:           %f m (%.2f in)' % (DTH, inches(DTH))
-            print '    Increment for phi:         %f degrees' % DPH
-            print '    Cylindrical coord phi:     %f m (%.2f in)' % (RFLD, inches(RFLD))
-            print '    Range of z:                %f - %f m, %.2f - %.2f (in) [calculated]' % (THETS, THETS + (NTH * DTH), inches(THETS), inches(THETS + (NTH * DTH)))
-            print '    Range of phi:              %f - %f degrees [calculated]' % (PHIS, PHIS + (NPH * DPH))
-        else:
-            print '    Initial theta angle:       %f degrees' % THETS
-            print '    Initial phi angle:         %f degrees' % PHIS
-            print '    Increment for theta:       %f degrees' % DTH
-            print '    Increment for phi:         %f degrees' % DPH
-            print '    Radial distance:           %f m (%.2f in)' % (RFLD, inches(RFLD))
-            print '    Range of theta:            %f - %f degrees [calculated]' % (THETS, THETS + (NTH * DTH))
-            print '    Range of phi:              %f - %f degrees [calculated]' % (PHIS, PHIS + (NPH * DPH))
-        print '    Gain normalization factor: %f' % GNOR
+        self.radiationPatterns.append(RadiationPattern(line))
+        if 'verbose' in self.opts:
+            self.radiationPatterns[-1].dump()
         return
 
     def PQ(self, line):
         # Print control for charge on wires
-        print 'PQ Print control for charge on wires:'
-        #print '    %s' % line,
-        print '    Not supported in nec2c'
+        print('PQ Print control for charge on wires:')
+        #print('    %s' % line, end='')
+        print('    Not supported in nec2c')
         return
 
     def PT(self, line):
-        # Page Title / Print Control for Current on Wires 
-        print 'PT Page Title / Print Control for Current on Wires :'
-        #print '    %s' % line,
-        print '    Not supported in nec2c'
+        # Page Title / Print Control for Current on Wires
+        print('PT Page Title / Print Control for Current on Wires :')
+        #print('    %s' % line, end='')
+        print('    Not supported in nec2c')
         return
 
     def TL(self, line):
         # Transmission Line
-        print 'TL Transmission Line:'
-        #print '    %s' % line,
-        parts  = line.split()
-        TAG1   = int(parts[1])
-        SEG1   = int(parts[2])
-        TAG2   = int(parts[3])
-        SEG2   = int(parts[4])
-
-        IMP    = float(parts[5])
-        LEN    = float(parts[6])
-        R1     = float(parts[7])
-        I1     = float(parts[8])
-        R2     = float(parts[9])
-        I2     = float(parts[10])
-        print '    Port 1 tag:       %d' % TAG1
-        print '    Port 1 segment:   %d' % SEG1
-        print '    Port 2 tag:       %d' % TAG2
-        print '    Port 2 segment:   %d' % SEG2
-
-        print '    Characteristic impedance:                   %f ohms' % IMP
-        print '    Length:                                     %f m (%.2f in)' % (LEN, inches(LEN))
-        print '    Real part of shunt admittance, end 1        %f mhos' % R1
-        print '    Imaginary part of shunt admittance, end 1   %f mhos' % I1
-        print '    Real part of shunt admittance, end 2        %f mhos' % R2
-        print '    Imaginary part of shunt admittance, end 2   %f mhos' % I2
+        tl = TransmissionLine(line)
+        self.transmissionLines.append(tl)
+        if 'verbose' in self.opts:
+            tl.dump()
         return
 
     def WG(self, line):
         # Write NGF file
-        print 'WG Write NGF file:'
-        #print '    %s' % line,
-        print '    Not supported in nec2c'
+        print('WG Write NGF file:')
+        #print('    %s' % line, end='')
+        print('    Not supported in nec2c')
         return
 
     def XQ(self, line):
         # Execute
-        print 'XQ Execute:'
-        #print '    %s' % line,
-        print '    Ignored in nec2c'
+        print('XQ Execute:')
+        #print('    %s' % line, end='')
+        print('    Ignored in nec2c')
         return
 
     def EN(self, line):
         # End of run
-        print 'EN End of run'
-        #print '    %s' % line,
-        #print 'End of Run'
+        if 'verbose' in self.opts:
+            print('EN End of run')
+        return
+
+    def dump(self):
+        for c in self.comments:
+            print('Comment: %s' % c)
+        self.geometry.dump()
+        for fr in self.frequencies:
+            fr.dump()
+        for ex in self.excitations:
+            ex.dump()
+        for ld in self.loadings:
+            ld.dump()
+        if self.ground is not None:
+            self.ground.dump()
+        if self.additionalGround is not None:
+            self.additionalGround.dump()
+        if self.extendedKernel:
+            print('EK Extended thin-wire kernel: Initiated')
+        if self.interactionRange is not None:
+            print('KH Interaction Approximation Range: %d wavelengths' % self.interactionRange)
+        for nt in self.networks:
+            nt.dump()
+        for tl in self.transmissionLines:
+            tl.dump()
+        for nf in self.nearFields:
+            nf.dump()
+        for rp in self.radiationPatterns:
+            rp.dump()
+        print('EN End of run')
         return
 
 def main():
-    printops = []
-    if len(sys.argv) == 1:
-        print 'Usage: %s filename [taglist]' % sys.argv[0]
-        print '   where filename is mandatory and [taglist] is an optional comma-delimited list of tags to print (no spaces in taglist)'
+    if len(sys.argv) < 2:
+        print('Usage: %s filename [--verbose] [--dump]' % sys.argv[0])
         return
 
-    if len(sys.argv) > 2:
-        opslist = sys.argv[2]
-        for op in opslist.split(','):
-            printops.append(op.upper())
+    verbose = '--verbose' in sys.argv or '-v' in sys.argv
+    model = NecModel(verbose=verbose)
+
     inf = open(sys.argv[1])
     for line in inf.readlines():
         lparts = line.split()
-        op = lparts[0]
-        if (len(printops) == 0) or (len(printops) and op in printops):
-            if op  in ops:
-                ops[lparts[0].upper()](line)
-            else:
-                print 'Unhandled -> ', line,
-    return
+        if not lparts:
+            continue
+        op = lparts[0].upper()
+        if op in model.ops:
+            model.ops[op](line)
+        else:
+            print('Unhandled -> ', line, end='')
+
+    if '--dump' in sys.argv or '-d' in sys.argv:
+        model.dump()
+
+    return model
 
 main()
-
-
-# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
